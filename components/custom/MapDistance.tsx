@@ -356,21 +356,6 @@ const MapDistance: React.FC<MapDistanceProps> = ({ onDistanceCalculated, onClose
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex  justify-center bg-black/50 backdrop-blur-sm">
-      <div className="bg-black/90 backdrop-blur-md p-6 rounded-xl w-[90vw] max-w-5xl max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-end mb-4">
-          <button
-            onClick={onClose}
-            className="text-white/70 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors"
-          >
-            <X size={20} />
-          </button>
-        </div>
-
-        {/* <div className="flex h-full flex-col md:grid md:grid-cols-2 gap-6">
-          <div className="order-1">
-            {renderInputs()}
-          </div> */}
 
           <div className="relative h-full rounded-xl overflow-hidden order-2">
             <MapContainer
@@ -433,8 +418,6 @@ const MapDistance: React.FC<MapDistanceProps> = ({ onDistanceCalculated, onClose
             </MapContainer>
           {/* </div> */}
         </div>
-      </div>
-    </div>
   );
 };
 

@@ -2,15 +2,15 @@
 
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
+import React, { useState,useEffect } from 'react';
 
 interface Package {
   id: string;
   destination: string;
-  name: string;
-  status: string;
-  created_at: string; 
+  recipient: string;
+  status: 'pending' | 'in-transit' | 'delivered';
+  eta: string;
+  orderDate: string; 
 }
 
 interface DriverProfile {
@@ -24,8 +24,6 @@ interface DriverProfile {
 const DriverDashboard: React.FC = () => {
   const [isMapLoading, setIsMapLoading] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
-  const [packageList, setPackageList] = useState<Package[]>([]);
-  const [error, setError] = useState<string | null>(null);
 
   const driverProfile: DriverProfile = {
     name: "John Doe",
@@ -58,7 +56,7 @@ const DriverDashboard: React.FC = () => {
       <header className="bg-slate-900 text-white p-4 shadow-md">
         <div className="flex justify-between items-center">
           <h1 className="text-xl font-bold">Driver Dashboard</h1>
-          <button 
+          <button
             onClick={() => setShowSettings(!showSettings)}
             className="flex items-center space-x-2 bg-slate-800 px-3 py-1 rounded hover:bg-slate-700"
           >
@@ -84,9 +82,13 @@ const DriverDashboard: React.FC = () => {
                 </div>
               ) : (
                 <div className="w-full h-full bg-slate-800 flex items-center justify-center border-2 border-dashed border-gray-600">
-                  <div className="text-gray-400">
-                    Map will be displayed here
-                  </div>
+                  <MapDistance
+                    onDistanceCalculated={(distance) => {
+                      //@ts-ignore
+                      setFormData(prev => ({ ...prev, distance: distance.toFixed(2) }));
+                    }}
+                    onClose={() => setShowMap(false)}
+                  />
                 </div>
               )}
             </div>
@@ -99,7 +101,7 @@ const DriverDashboard: React.FC = () => {
             <div className="p-4">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold">Profile Settings</h2>
-                <button 
+                <button
                   onClick={() => setShowSettings(false)}
                   className="text-gray-500 hover:text-gray-400"
                 >
@@ -143,11 +145,10 @@ const DriverDashboard: React.FC = () => {
                   <div key={pkg.id} className="border border-gray-700 rounded-lg p-3 hover:shadow-md bg-slate-800">
                     <div className="flex justify-between items-start mb-2">
                       <span className="font-semibold">Package {pkg.id}</span>
-                      <span className={`text-xs px-2 py-1 rounded-full ${
-                        pkg.status === 'delivered' ? 'bg-green-800 text-green-300' :
+                      <span className={`text-xs px-2 py-1 rounded-full ${pkg.status === 'delivered' ? 'bg-green-800 text-green-300' :
                         pkg.status === 'in-transit' ? 'bg-blue-800 text-blue-300' :
-                        'bg-yellow-800 text-yellow-300'
-                      }`}>
+                          'bg-yellow-800 text-yellow-300'
+                        }`}>
                         {pkg.status.replace('-', ' ')}
                       </span>
                     </div>

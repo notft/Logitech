@@ -41,6 +41,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/js-cookie": "^3.0.6",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/leaflet": "^1.9.16",
     "@types/node": "^20",
     "@types/pg": "^8.11.11",
     "@types/react": "^19",
