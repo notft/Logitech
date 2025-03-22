@@ -30,10 +30,9 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen bg-slate-950 items-center justify-center px-4 sm:px-8">
-      <div className="w-full max-w-4xl sm:max-w-6xl bg-slate-900 rounded-2xl overflow-hidden flex flex-col lg:flex-row shadow-lg">
-        
+    <div className="w-full max-w-md bg-slate-900 rounded-2xl overflow-hidden flex flex-col items-center text-center p-8 shadow-lg">
 
-        <div className="w-full lg:w-1/2 p-6 sm:p-12 flex flex-col justify-center">
+    <div className="w-full p-6 sm:p-10 flex flex-col justify-center">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -41,7 +40,7 @@ export default function LoginPage() {
             className="mb-6"
           >
             <h1 className="text-3xl font-bold">
-              <span className="text-white">Logi</span>
+              <span className="text-white ">Logi</span>
               <span className="text-red-400">Scale</span>
             </h1>
             <h2 className="text-gray-300 text-xl font-medium mt-2">Welcome back</h2>
@@ -129,8 +128,8 @@ export default function LoginPage() {
                   Remember me
                 </label>
               </div>
-              <Link href="#" className="text-sm text-blue-400 hover:text-blue-500 transition-colors">
-                Forgot Password?
+              <Link href="/auth/register" className="text-sm text-blue-400 hover:text-blue-500 transition-colors">
+                Register
               </Link>
             </motion.div>
 
@@ -161,16 +160,7 @@ export default function LoginPage() {
           </form>
         </div>
 
-        <div className="hidden lg:flex w-1/2 relative">
-          <motion.img
-            src="/logisiticP.png"
-            alt="Logistics Illustration"
-            className="w-full h-full object-contain" 
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-          />
-        </div>
+       
       </div>
     </div>
   )
