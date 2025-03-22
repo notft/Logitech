@@ -30,9 +30,9 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen bg-slate-950">
-      {/* Main container with rounded corners */}
+     
       <div className="m-auto w-full max-w-6xl h-[600px] bg-slate-900 rounded-3xl overflow-hidden flex shadow-xl">
-        {/* Left side - Login form */}
+       
         <div className="w-full lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -160,7 +160,6 @@ export default function LoginPage() {
           </form>
         </div>
 
-        {/* Right side - Illustration */}
         <div className="hidden lg:flex w-1/2 bg-slate-800 relative">
           <motion.img
             src="/logisiticP.png"
