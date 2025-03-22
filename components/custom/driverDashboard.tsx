@@ -1,16 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 "use client";
 
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 interface Package {
   id: string;
-  orderId: string;
   destination: string;
-  recipient: string;
-  status: 'pending' | 'in-transit' | 'delivered';
-  eta: string;
-  orderDate: string; 
+  name: string;
+  status: string;
+  created_at: string; 
 }
 
 interface DriverProfile {
@@ -24,6 +24,8 @@ interface DriverProfile {
 const DriverDashboard: React.FC = () => {
   const [isMapLoading, setIsMapLoading] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
+  const [packageList, setPackageList] = useState<Package[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const driverProfile: DriverProfile = {
     name: "John Doe",
@@ -33,32 +35,21 @@ const DriverDashboard: React.FC = () => {
     vehicleInfo: "Toyota Corolla (2020) - ABC1234"
   };
 
-  const packages: Package[] = [
-    {
-      id: "PKG-001",
-      orderId: "ORD-56789",
-      destination: "123 Main St, Anytown",
-      recipient: "Alice Smith",
-      status: "in-transit",
-      eta: "15 mins",
-      orderDate: "March 20, 2025",
-    },
-    {
-      id: "PKG-002",
-      orderId: "ORD-56789",
-      destination: "456 Oak Ave, Somewhere",
-      recipient: "Bob Johnson",
-      status: "pending",
-      eta: "35 mins",
-      orderDate: "March 20, 2025",
-    },
-  ];
-
+  const fetchPackage = async () => {
+    const response = await fetch("/api/package");
+    const data = await response.json();
+    setPackageList(data);
+      if(!response.ok){
+        setError("No orders found");
+      }
+  }
+  useEffect(() => {
+    fetchPackage();
+  }, []);
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsMapLoading(false);
     }, 2000);
-
     return () => clearTimeout(timeout);
   }, []);
 
@@ -79,7 +70,9 @@ const DriverDashboard: React.FC = () => {
         </div>
       </header>
 
+      {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
+        {/* Left Panel - Map Area */}
         <div className="flex-grow p-4">
           <div className="bg-slate-900 rounded-lg shadow-md h-full flex flex-col border border-gray-700">
             <div className="p-4 border-b border-gray-700">
@@ -99,6 +92,8 @@ const DriverDashboard: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Right Panel - Package Details & Settings */}
         <div className="w-80 bg-slate-900 border-l border-gray-700 overflow-y-auto">
           {showSettings ? (
             <div className="p-4">
@@ -144,7 +139,7 @@ const DriverDashboard: React.FC = () => {
               </div>
 
               <div className="space-y-4">
-                {packages.map(pkg => (
+                {packageList.map(pkg => (
                   <div key={pkg.id} className="border border-gray-700 rounded-lg p-3 hover:shadow-md bg-slate-800">
                     <div className="flex justify-between items-start mb-2">
                       <span className="font-semibold">Package {pkg.id}</span>
@@ -157,11 +152,10 @@ const DriverDashboard: React.FC = () => {
                       </span>
                     </div>
                     <div className="text-sm space-y-1">
-                      <p><span className="text-gray-400">Order ID:</span> {pkg.orderId}</p>
-                      <p><span className="text-gray-400">Order Date:</span> {pkg.orderDate}</p>
-                      <p><span className="text-gray-400">To:</span> {pkg.recipient}</p>
+                      <p><span className="text-gray-400">Order ID:</span> ORD-{pkg.id}</p>
+                      <p><span className="text-gray-400">Order Date:</span> {pkg.created_at.slice(0,10)}</p>
+                      <p><span className="text-gray-400">To:</span> {pkg.name}</p>
                       <p><span className="text-gray-400">Address:</span> {pkg.destination}</p>
-                      <p><span className="text-gray-400">ETA:</span> {pkg.eta}</p>
                     </div>
                     <div className="mt-3 flex space-x-2">
                       <button className="flex-1 bg-blue-600 text-white text-sm py-1 px-2 rounded hover:bg-blue-700">

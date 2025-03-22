@@ -47,8 +47,9 @@ const CompanyDashboard: React.FC = () => {
   // Form state for new order
   const [newOrderForm, setNewOrderForm] = useState({
     destination: '',
-    items: '',
-    priority: 'standard'
+    start
+    name: '',
+    type: 'standard'
   });
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -58,18 +59,18 @@ const CompanyDashboard: React.FC = () => {
 
   const handleSubmitOrder = (e: React.FormEvent) => {
     e.preventDefault();
-    // Mock order creation
-    const newOrder: Order = {
-      id: `ORD-${String(orders.length + 1).padStart(3, '0')}`,
-      destination: newOrderForm.destination,
-      items: newOrderForm.items.split(',').map(item => item.trim()),
-      status: 'pending',
-      createdAt: new Date().toISOString(),
-      estimatedDelivery: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-    };
-    
-    setOrders([newOrder, ...orders]);
-    setNewOrderForm({ destination: '', items: '', priority: 'standard' });
+    try{
+      const res = fetch("/api/company/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newOrderForm),
+      });
+    }catch(e){
+      console.error(e);
+
+    }
     setActiveTab('orders');
   };
 

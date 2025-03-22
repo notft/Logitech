@@ -26,7 +26,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
         }
         const token = jwt.sign({ userId: user.id },SECRET_KEY,{ expiresIn: '1h' });
-        if(user.email.split('@')[1] != "gov.in" && user.email.split('@')[1] == "gmail.com" && user.email.split('@')[1] == "yahoo.com" && user.email.split('@')[1] == "outlook.com"){
+        if(user.email.split('@')[1] != "gov.in" || user.email.split('@')[1] == "gmail.com" || user.email.split('@')[1] == "yahoo.com" || user.email.split('@')[1] == "outlook.com"){
             return NextResponse.json({ token, "type":"driver" }, { status: 200 });
         }else if(user.email.split('@')[1] == "gov.in"){
             return NextResponse.json({ token, "type":"admin" }, { status: 200 });
