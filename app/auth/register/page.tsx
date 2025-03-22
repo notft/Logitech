@@ -2,21 +2,22 @@
 
 import type React from "react"
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import Link from "next/link"
-import { Lock, AlertCircle, Loader2, User, Mail, ArrowLeft } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-
+import { motion, AnimatePresence } from "motion/react";
+import Link from "next/link";
+import { Lock, AlertCircle, Loader2, User, Mail, ArrowLeft } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import {useRouter} from "next/navigation";
 export default function RegisterPage() {
   const [email, setEmail] = useState("")
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
   const [loading, setLoading] = useState(false)
-
+  const router = useRouter();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -27,13 +28,30 @@ export default function RegisterPage() {
         setLoading(false)
         setError("Passwords do not match. Please try again.")
       }, 1000)
-      return
     }
+      try{
+        const res = await fetch("/api/auth/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, username, password }),
+        })
+        if(!res.ok){
+          setError("Registration failed. Please try again.");
+          setLoading(false);
+          return
+        }
+        setSuccess("Successfully Registered")
+        router.push("/auth/login")
 
-    setTimeout(() => {
-      setLoading(false)
-      setError("Registration failed. Try again.")
-    }, 1500)
+      }catch(error){
+        console.error("Error registering user:", error)
+        
+      }finally{
+        setLoading(false)
+      }
+    
   }
 
   return (
@@ -70,6 +88,17 @@ export default function RegisterPage() {
               >
                 <AlertCircle className="h-4 w-4 mr-2 flex-shrink-0" />
                 <p>{error}</p>
+              </motion.div>
+            )}
+            {success && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="flex items-center p-3 mb-6 text-sm rounded-lg bg-green-500/10 text-green-400 border border-green-500/30"
+              >
+                <AlertCircle className="h-4 w-4 mr-2 flex-shrink-0" />
+                <p>{success}</p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -176,6 +205,7 @@ export default function RegisterPage() {
                 type="submit"
                 className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white h-12 rounded-lg font-medium shadow-lg shadow-blue-500/20 transition-all"
                 disabled={loading}
+                onClick={handleSubmit}
               >
                 {loading ? (
                   <motion.div className="flex items-center justify-center animate-pulse">
