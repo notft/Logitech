@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsLoading(false); 
