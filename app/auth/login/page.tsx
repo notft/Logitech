@@ -5,10 +5,10 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { Lock, AlertCircle, Loader2, User } from "lucide-react"
-import { Input } from "Component/components/ui/input"
-import { Button } from "Component/components/ui/button"
-import { Label } from "Component/components/ui/label"
-import { Checkbox } from "Component/components/ui/checkbox"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { Checkbox } from "@/components/ui/checkbox"
 
 export default function LoginPage() {
   const [username, setUsername] = useState("")

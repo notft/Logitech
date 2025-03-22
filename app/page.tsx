@@ -1,5 +1,5 @@
 "use client";
-import Loading from "Component/components/ui/Loading";
+import Loading from "@/components/ui/Loading";
 import React, { useState, useEffect } from "react";
 
 export default function App() {
