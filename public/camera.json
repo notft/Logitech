@@ -1,0 +1,695 @@
+[
+    {
+        "Sl No.": 1,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-1",
+        "District": "Thiruvananthapura",
+        "Name of location": "Parassala",
+        "Latitude": 8.3150151,
+        "Longitude": 77.1287226,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 2,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-2",
+        "District": "Thiruvananthapura",
+        "Name of location": "Pambukala",
+        "Latitude": 8.3254417,
+        "Longitude": 77.0641614,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 3,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-3",
+        "District": "Thiruvananthapura",
+        "Name of location": "Kovalam Jn",
+        "Latitude": 8.399849392,
+        "Longitude": 76.98087696,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 4,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-4",
+        "District": "Thiruvananthapura",
+        "Name of location": "Neyyattinkara_2",
+        "Latitude": 8.4078907,
+        "Longitude": 77.0794932,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 5,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-5",
+        "District": "Thiruvananthapura",
+        "Name of location": "Neyyattinkara_1",
+        "Latitude": 8.4080435,
+        "Longitude": 77.0792108,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 6,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-6",
+        "District": "Thiruvananthapura",
+        "Name of location": "Thozhukkal",
+        "Latitude": 8.4167193,
+        "Longitude": 77.0803191,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 7,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-7",
+        "District": "Thiruvananthapura",
+        "Name of location": "Balaramapuram_1",
+        "Latitude": 8.4263583,
+        "Longitude": 77.038985,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 8,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-8",
+        "District": "Thiruvananthapura",
+        "Name of location": "Balaramapuram_2",
+        "Latitude": 8.427158591,
+        "Longitude": 77.03957643,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 9,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-9",
+        "District": "Thiruvananthapura",
+        "Name of location": "Pallichal Jn",
+        "Latitude": 8.443115896,
+        "Longitude": 77.01732215,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 10,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-10",
+        "District": "Thiruvananthapura",
+        "Name of location": "Thiruvallom",
+        "Latitude": 8.4431921,
+        "Longitude": 76.9524799,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 11,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-11",
+        "District": "Thiruvananthapura",
+        "Name of location": "Kumarichantha",
+        "Latitude": 8.45163636,
+        "Longitude": 76.9470077,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 12,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-12",
+        "District": "Thiruvananthapura",
+        "Name of location": "Vellayani Jn",
+        "Latitude": 8.4590336,
+        "Longitude": 76.9973992,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 13,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-13",
+        "District": "Thiruvananthapura",
+        "Name of location": "Vellayani Jn_2",
+        "Latitude": 8.459099405,
+        "Longitude": 76.99749157,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 14,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-14",
+        "District": "Thiruvananthapura",
+        "Name of location": "Manacaud Jn",
+        "Latitude": 8.4719437,
+        "Longitude": 76.9481288,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 15,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-15",
+        "District": "Thiruvananthapura",
+        "Name of location": "Eenjakkal_1",
+        "Latitude": 8.480571432,
+        "Longitude": 76.93514396,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 16,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-16",
+        "District": "Thiruvananthapura",
+        "Name of location": "Eenjakkal_2",
+        "Latitude": 8.480781673,
+        "Longitude": 76.93591442,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 17,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-17",
+        "District": "Thiruvananthapura",
+        "Name of location": "Killipalam , near PRS hopspital",
+        "Latitude": 8.481339441,
+        "Longitude": 76.9595876,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 18,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-18",
+        "District": "Thiruvananthapura",
+        "Name of location": "Killipalam",
+        "Latitude": 8.481502261,
+        "Longitude": 76.95821229,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 19,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-19",
+        "District": "Thiruvananthapura",
+        "Name of location": "Power house road",
+        "Latitude": 8.484994424,
+        "Longitude": 76.95298903,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 20,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-20",
+        "District": "Thiruvananthapura",
+        "Name of location": "East fort stretch",
+        "Latitude": 8.48596404,
+        "Longitude": 76.94781505,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 21,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-21",
+        "District": "Thiruvananthapura",
+        "Name of location": "Thambanoor",
+        "Latitude": 8.4870139,
+        "Longitude": 76.9521384,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 22,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-22",
+        "District": "Thiruvananthapura",
+        "Name of location": "Malayinkeezh",
+        "Latitude": 8.4875062,
+        "Longitude": 77.0364776,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 23,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-23",
+        "District": "Thiruvananthapura",
+        "Name of location": "Kaithamukk",
+        "Latitude": 8.489562938,
+        "Longitude": 76.94019489,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 24,
+        "Unique ID": "KL - KEL - KMVD - 50 - PVDS - 01-24",
+        "District": "Thiruvananthapura",
+        "Name of location": "MG Road",
+        "Latitude": 8.490216194,
+        "Longitude": 76.9473004,
+        "Type of System": "PVDS"
+    },
+    {
+        "Sl No.": 25,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-25",
+        "District": "Thiruvananthapura",
+        "Name of location": "Poojapura",
+        "Latitude": 8.4910375,
+        "Longitude": 76.9738924,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 26,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-26",
+        "District": "Thiruvananthapura",
+        "Name of location": "All saints",
+        "Latitude": 8.494618515,
+        "Longitude": 76.9098068,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 27,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-27",
+        "District": "Thiruvananthapura",
+        "Name of location": "All saints_2",
+        "Latitude": 8.494954755,
+        "Longitude": 76.90943129,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 28,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-28",
+        "District": "Thiruvananthapura",
+        "Name of location": "Pettah",
+        "Latitude": 8.49520478,
+        "Longitude": 76.92757811,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 29,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-29",
+        "District": "Thiruvananthapura",
+        "Name of location": "Vettukadu",
+        "Latitude": 8.4965309,
+        "Longitude": 76.8987359,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 30,
+        "Unique ID": "KL - KEL - KMVD - 50 - PVDS - 01-31",
+        "District": "Thiruvananthapura",
+        "Name of location": "Holy Angels Convent road",
+        "Latitude": 8.498014727,
+        "Longitude": 76.94286201,
+        "Type of System": "PVDS"
+    },
+    {
+        "Sl No.": 31,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-32",
+        "District": "Thiruvananthapura",
+        "Name of location": "AKG center",
+        "Latitude": 8.500406184,
+        "Longitude": 76.94618963,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 32,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-33",
+        "District": "Thiruvananthapura",
+        "Name of location": "Mangattukadav",
+        "Latitude": 8.5004297,
+        "Longitude": 77.0062457,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 33,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-34",
+        "District": "Thiruvananthapura",
+        "Name of location": "Vazhuthacaud , WC jn",
+        "Latitude": 8.5004554,
+        "Longitude": 76.9582906,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 34,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-35",
+        "District": "Thiruvananthapura",
+        "Name of location": "Palayam , near AKG center",
+        "Latitude": 8.500657531,
+        "Longitude": 76.94628283,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 35,
+        "Unique ID": "KL - KEL - KMVD - 50 - SVDS - 01-36",
+        "District": "Thiruvananthapura",
+        "Name of location": "Chakka bypass",
+        "Latitude": 8.5021486,
+        "Longitude": 76.9127634,
+        "Type of System": "SVDS"
+    },
+    {
+        "Sl No.": 36,
+        "Unique ID": "KL - KEL - KMVD - 50 - PVDS - 01-37",
+        "District": "Thiruvananthapura",
+        "Name of location": "Palayam",
+        "Latitude": 8.502110568,
+        "Longitude": 76.95008822,
+        "Type of System": "PVDS"
+    },
+    {
+        "Sl No.": 37,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-38",
+        "District": "Thiruvananthapura",
+        "Name of location": "Kattakada_3",
+        "Latitude": 8.5023271,
+        "Longitude": 77.0718469,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 38,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-39",
+        "District": "Thiruvananthapura",
+        "Name of location": "Edapazhanji Bridge",
+        "Latitude": 8.5045791,
+        "Longitude": 76.9705438,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 39,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-40",
+        "District": "Thiruvananthapura",
+        "Name of location": "Kattakada_1",
+        "Latitude": 8.5060175,
+        "Longitude": 77.079171,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 40,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-41",
+        "District": "Thiruvananthapura",
+        "Name of location": "Kattakada_2",
+        "Latitude": 8.5074106,
+        "Longitude": 77.0869781,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 41,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-42",
+        "District": "Thiruvananthapura",
+        "Name of location": "Kundamankadavu_2",
+        "Latitude": 8.5088349,
+        "Longitude": 77.0033788,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 42,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-43",
+        "District": "Thiruvananthapura",
+        "Name of location": "Kundamankadavu_1",
+        "Latitude": 8.509155,
+        "Longitude": 77.0048124,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 43,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-44",
+        "District": "Thiruvananthapura",
+        "Name of location": "Veli",
+        "Latitude": 8.5123626,
+        "Longitude": 76.8908583,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 44,
+        "Unique ID": "KL - KEL - KMVD - 50 - PVDS - 01-45",
+        "District": "Thiruvananthapura",
+        "Name of location": "KIMS Hopspital Jn , Venpalavattam",
+        "Latitude": 8.513192199,
+        "Longitude": 76.91054508,
+        "Type of System": "PVDS"
+    },
+    {
+        "Sl No.": 45,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-46",
+        "District": "Thiruvananthapura",
+        "Name of location": "Venpalavattom near KIMS",
+        "Latitude": 8.5140597,
+        "Longitude": 76.913645,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 46,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-47",
+        "District": "Thiruvananthapura",
+        "Name of location": "Venpalavattam , Poonthi road",
+        "Latitude": 8.5141757,
+        "Longitude": 76.9136729,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 47,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-48",
+        "District": "Thiruvananthapura",
+        "Name of location": "Vilappilsala",
+        "Latitude": 8.5218664,
+        "Longitude": 77.0346773,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 48,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-49",
+        "District": "Thiruvananthapura",
+        "Name of location": "Pattom",
+        "Latitude": 8.5230483,
+        "Longitude": 76.9407198,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 49,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-50",
+        "District": "Thiruvananthapura",
+        "Name of location": "Kottamukk , Aakkulam",
+        "Latitude": 8.5230868,
+        "Longitude": 76.9122663,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 50,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-51",
+        "District": "Thiruvananthapura",
+        "Name of location": "Pulimood Jn , Vattiyoorkav",
+        "Latitude": 8.5235036,
+        "Longitude": 76.9862784,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 51,
+        "Unique ID": "KL - KEL - KMVD - 50 - PVDS - 01-52",
+        "District": "Thiruvananthapura",
+        "Name of location": "Pattom ( PVDS )",
+        "Latitude": 8.526084221,
+        "Longitude": 76.93893425,
+        "Type of System": "PVDS"
+    },
+    {
+        "Sl No.": 52,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-53",
+        "District": "Thiruvananthapura",
+        "Name of location": "Kallikkaad",
+        "Latitude": 8.5294323,
+        "Longitude": 77.1232054,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 53,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-54",
+        "District": "Thiruvananthapura",
+        "Name of location": "Ulloor",
+        "Latitude": 8.529678,
+        "Longitude": 76.9326316,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 54,
+        "Unique ID": "KL - KEL - KMVD - 50 - PVDS - 01-55",
+        "District": "Thiruvananthapura",
+        "Name of location": "Ambalamukk",
+        "Latitude": 8.529742424,
+        "Longitude": 76.96094949,
+        "Type of System": "PVDS"
+    },
+    {
+        "Sl No.": 55,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-56",
+        "District": "Thiruvananthapura",
+        "Name of location": "Poovachal",
+        "Latitude": 8.5347751,
+        "Longitude": 77.0867638,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 56,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-57",
+        "District": "Thiruvananthapura",
+        "Name of location": "Puliyarakonam",
+        "Latitude": 8.5354007,
+        "Longitude": 77.0161863,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 57,
+        "Unique ID": "KL - KEL - KMVD - 50 - SVDS - 01-58",
+        "District": "Thiruvananthapura",
+        "Name of location": "Bypass near UST Global",
+        "Latitude": 8.537797443,
+        "Longitude": 76.87918805,
+        "Type of System": "SVDS"
+    },
+    {
+        "Sl No.": 58,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-59",
+        "District": "Thiruvananthapura",
+        "Name of location": "Vazhayila , To Peroorkada",
+        "Latitude": 8.5426433,
+        "Longitude": 76.9711209,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 59,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-60",
+        "District": "Thiruvananthapura",
+        "Name of location": "Nettayam",
+        "Latitude": 8.5437866,
+        "Longitude": 76.9876427,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 60,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-61",
+        "District": "Thiruvananthapura",
+        "Name of location": "Vazhayila , To Nedumangadu",
+        "Latitude": 8.5450854,
+        "Longitude": 76.9727058,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 61,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-62",
+        "District": "Thiruvananthapura",
+        "Name of location": "Kottamughal_1",
+        "Latitude": 8.5521029,
+        "Longitude": 76.9423557,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 62,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-63",
+        "District": "Thiruvananthapura",
+        "Name of location": "Kottamughal_2",
+        "Latitude": 8.5522066,
+        "Longitude": 76.9426095,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 63,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-64",
+        "District": "Thiruvananthapura",
+        "Name of location": "Mannanthala , Pothencode road",
+        "Latitude": 8.5607153,
+        "Longitude": 76.9434491,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 64,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-65",
+        "District": "Thiruvananthapura",
+        "Name of location": "Mannanthala , Peroorkada road",
+        "Latitude": 8.5607214,
+        "Longitude": 76.9434257,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 65,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-66",
+        "District": "Thiruvananthapura",
+        "Name of location": "Paravankunnu Jn .",
+        "Latitude": 8.5678039,
+        "Longitude": 76.8733965,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 66,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-67",
+        "District": "Thiruvananthapura",
+        "Name of location": "Vettroad , towards Pothencode",
+        "Latitude": 8.5824067,
+        "Longitude": 76.8638977,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 67,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-68",
+        "District": "Thiruvananthapura",
+        "Name of location": "Vettroad , Pothencode road",
+        "Latitude": 8.5844392,
+        "Longitude": 76.8704745,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 68,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-69",
+        "District": "Thiruvananthapura",
+        "Name of location": "Vattappara_1",
+        "Latitude": 8.5928899,
+        "Longitude": 76.9525046,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 69,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-70",
+        "District": "Thiruvananthapura",
+        "Name of location": "Vattappara",
+        "Latitude": 8.5930096,
+        "Longitude": 76.9514364,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 70,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-71",
+        "District": "Thiruvananthapura",
+        "Name of location": "Nedumangad , Peroorkada road",
+        "Latitude": 8.6006022,
+        "Longitude": 76.9959209,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 71,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-72",
+        "District": "Thiruvananthapura",
+        "Name of location": "Nedumangadu , Kulavikkonam",
+        "Latitude": 8.6015071,
+        "Longitude": 77.0076317,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 72,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-73",
+        "District": "Thiruvananthapura",
+        "Name of location": "Nedumangadu , Ponmudi road",
+        "Latitude": 8.6078024,
+        "Longitude": 77.0054544,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 73,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-74",
+        "District": "Thiruvananthapura",
+        "Name of location": "Nedumangadu",
+        "Latitude": 8.614673,
+        "Longitude": 76.9977609,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 74,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-75",
+        "District": "Thiruvananthapura",
+        "Name of location": "Nedumangadu Vembayam road",
+        "Latitude": 8.6161716,
+        "Longitude": 76.9898788,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 75,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-76",
+        "District": "Thiruvananthapura",
+        "Name of location": "MC road , Venjaramood",
+        "Latitude": 8.6712494,
+        "Longitude": 76.9114421,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 76,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-77",
+        "District": "Thiruvananthapura",
+        "Name of location": "Thandrampoyka",
+        "Latitude": 8.6871302,
+        "Longitude": 76.9067379,
+        "Type of System": "Al Camera"
+    },
+    {
+        "Sl No.": 77,
+        "Unique ID": "KL - KEL - KMVD - 50 - AICS - 01-78",
+        "District": "Thiruvananthapura",
+        "Name of location": "Mama Moonnumukku , Attingal",
+        "Latitude": 8.6883583,
+        "Longitude": 76.8238267,
+        "Type of System": "Al Camera"
+    }
+]
