@@ -10,7 +10,7 @@ export default function App() {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsLoading(false); 
-      router.push("/auth/login");
+      router.push("/auth/register");
     }, 4000);
 
     return () => clearTimeout(timeoutId);
