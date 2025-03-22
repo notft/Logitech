@@ -29,24 +29,22 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-950">
-     
-      <div className="m-auto w-full max-w-6xl h-[600px] bg-slate-900 rounded-3xl overflow-hidden flex shadow-xl">
-       
-        <div className="w-full lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+    <div className="flex min-h-screen bg-slate-950 items-center justify-center px-4 sm:px-8">
+      <div className="w-full max-w-4xl sm:max-w-6xl bg-slate-900 rounded-2xl overflow-hidden flex flex-col lg:flex-row shadow-lg">
+        
+
+        <div className="w-full lg:w-1/2 p-6 sm:p-12 flex flex-col justify-center">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-8"
+            className="mb-6"
           >
-            <div className="flex items-center gap-2 mb-10">
-              <h1 className="text-3xl font-bold">
-                <span className="text-red-400">Logi</span>
-                <span className="text-white">Scale</span>
-              </h1>
-            </div>
-            <h2 className="text-gray-300 text-xl font-medium">Welcome back</h2>
+            <h1 className="text-3xl font-bold">
+              <span className="text-white">Logi</span>
+              <span className="text-red-400">Scale</span>
+            </h1>
+            <h2 className="text-gray-300 text-xl font-medium mt-2">Welcome back</h2>
             <p className="text-gray-400 mt-1">Please enter your details to sign in</p>
           </motion.div>
 
@@ -126,7 +124,7 @@ export default function LoginPage() {
                 />
                 <label
                   htmlFor="remember"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-400"
+                  className="text-sm font-medium text-gray-400"
                 >
                   Remember me
                 </label>
@@ -150,7 +148,7 @@ export default function LoginPage() {
                   <motion.div
                     className="flex items-center justify-center"
                     animate={{ opacity: [1, 0.7, 1] }}
-                    transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY }}
+                    transition={{ duration: 1, repeat: Infinity }}
                   >
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Logging in...
@@ -163,11 +161,11 @@ export default function LoginPage() {
           </form>
         </div>
 
-        <div className="hidden lg:flex w-1/2 bg-slate-800 relative">
+        <div className="hidden lg:flex w-1/2 relative">
           <motion.img
             src="/logisiticP.png"
             alt="Logistics Illustration"
-            className="absolute inset-0 w-full h-full object-cover opacity-90"
+            className="w-full h-full object-contain" 
             initial={{ opacity: 0, scale: 1.1 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.3 }}
