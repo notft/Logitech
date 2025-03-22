@@ -47,9 +47,8 @@ const CompanyDashboard: React.FC = () => {
   // Form state for new order
   const [newOrderForm, setNewOrderForm] = useState({
     destination: '',
-    start
-    name: '',
-    type: 'standard'
+    items: '',
+    priority: 'standard'
   });
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
