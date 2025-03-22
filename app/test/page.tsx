@@ -8,6 +8,8 @@ function test() {
   return (
     <>
         <MapDistance
+          startLoc="Kottayam"
+          endLoc="Kochi"
           onDistanceCalculated={(distance) => {
             //@ts-ignore
             setFormData(prev => ({ ...prev, distance: distance.toFixed(2) }));

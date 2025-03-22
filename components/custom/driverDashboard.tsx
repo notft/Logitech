@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 "use client";
-
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import MapDistance from '@/components/custom/MapDistance';
 
 interface Package {
   id: string;
@@ -10,7 +8,10 @@ interface Package {
   recipient: string;
   status: 'pending' | 'in-transit' | 'delivered';
   eta: string;
-  orderDate: string; 
+  orderDate: string;
+  name: string;
+  created_at: string;
+  start_location: string;
 }
 
 interface DriverProfile {
@@ -24,6 +25,13 @@ interface DriverProfile {
 const DriverDashboard: React.FC = () => {
   const [isMapLoading, setIsMapLoading] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
+  const [packageList, setPackageList] = useState<Package[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [showMap, setShowMap] = useState(false);
+  const [formData, setFormData] = useState<{ distance: string | null }>({ distance: null });
+  const [startLoc, setStartLoc] = useState<string | null>(null);
+  const [endLoc, setEndLoc] = useState<string | null>(null);
+  const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
 
   const driverProfile: DriverProfile = {
     name: "John Doe",
@@ -34,22 +42,58 @@ const DriverDashboard: React.FC = () => {
   };
 
   const fetchPackage = async () => {
-    const response = await fetch("/api/package");
-    const data = await response.json();
-    setPackageList(data);
-      if(!response.ok){
-        setError("No orders found");
+    try {
+      const response = await fetch("/api/package");
+      if (!response.ok) {
+        throw new Error("Failed to fetch packages");
       }
-  }
+      const data = await response.json();
+      setPackageList(data);
+    } catch (err) {
+      setError("No orders found");
+    }
+  };
+
   useEffect(() => {
     fetchPackage();
   }, []);
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsMapLoading(false);
     }, 2000);
     return () => clearTimeout(timeout);
   }, []);
+
+  // Added debugging to track state changes
+  useEffect(() => {
+    if (startLoc && endLoc) {
+      console.log("Navigation points set:", { startLoc, endLoc });
+      // Force showMap to true whenever navigation points are set
+      setShowMap(true);
+    }
+  }, [startLoc, endLoc]);
+
+  const handleNavigate = (pkg: Package) => {
+    console.log("Navigate clicked for package:", pkg.id);
+    // Set the selected package
+    setSelectedPackage(pkg);
+    
+    // Force reset locations first to trigger a re-render if same package is selected twice
+    setStartLoc(null);
+    setEndLoc(null);
+    
+    // Use setTimeout to ensure the reset happens before setting new values
+    setTimeout(() => {
+      if (pkg.start_location && pkg.destination) {
+        setStartLoc(pkg.start_location);
+        setEndLoc(pkg.destination);
+        setShowMap(true);
+      } else {
+        console.error("Missing location data for package:", pkg.id);
+      }
+    }, 50);
+  };
 
   return (
     <div className="flex flex-col h-screen bg-slate-950 text-gray-200">
@@ -73,22 +117,48 @@ const DriverDashboard: React.FC = () => {
         {/* Left Panel - Map Area */}
         <div className="flex-grow p-4">
           <div className="bg-slate-900 rounded-lg shadow-md h-full flex flex-col border border-gray-700">
-            <div className="p-4 border-b border-gray-700">
+            <div className="p-4 border-b border-gray-700 flex justify-between items-center">
               <h2 className="text-lg font-semibold">Navigation Map</h2>
+              {selectedPackage && (
+                <div className="text-sm text-blue-400">
+                  Navigating to: {selectedPackage.destination}
+                </div>
+              )}
             </div>
             <div className="flex-grow relative">
               {isMapLoading ? (
                 <div className="absolute inset-0 flex items-center justify-center">
+                  <p>Loading map...</p>
                 </div>
               ) : (
                 <div className="w-full h-full bg-slate-800 flex items-center justify-center border-2 border-dashed border-gray-600">
-                  <MapDistance
-                    onDistanceCalculated={(distance) => {
-                      //@ts-ignore
-                      setFormData(prev => ({ ...prev, distance: distance.toFixed(2) }));
-                    }}
-                    onClose={() => setShowMap(false)}
-                  />
+                  {showMap && startLoc && endLoc ? (
+                    <MapDistance
+                      key={`${startLoc}-${endLoc}`} // Add key to force re-render when locations change
+                      startLoc={startLoc}
+                      endLoc={endLoc}
+                      onDistanceCalculated={(distance) => {
+                        console.log("Distance calculated:", distance);
+                        setFormData({ distance: distance.toFixed(2) });
+                      }}
+                      onClose={() => {
+                        console.log("Map closed");
+                        setShowMap(false);
+                        setStartLoc(null);
+                        setEndLoc(null);
+                        setSelectedPackage(null);
+                      }}
+                    />
+                  ) : (
+                    <div className="text-center p-4">
+                      <p className="mb-2">Select a package to navigate</p>
+                      {formData.distance && (
+                        <p className="text-green-400">
+                          Last calculated distance: {formData.distance} miles
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -140,39 +210,58 @@ const DriverDashboard: React.FC = () => {
                 <h2 className="text-lg font-semibold">Package Details</h2>
               </div>
 
-              <div className="space-y-4">
-                {packageList.map(pkg => (
-                  <div key={pkg.id} className="border border-gray-700 rounded-lg p-3 hover:shadow-md bg-slate-800">
-                    <div className="flex justify-between items-start mb-2">
-                      <span className="font-semibold">Package {pkg.id}</span>
-                      <span className={`text-xs px-2 py-1 rounded-full ${pkg.status === 'delivered' ? 'bg-green-800 text-green-300' :
-                        pkg.status === 'in-transit' ? 'bg-blue-800 text-blue-300' :
-                          'bg-yellow-800 text-yellow-300'
-                        }`}>
-                        {pkg.status.replace('-', ' ')}
-                      </span>
+              {error ? (
+                <div className="bg-red-900 text-red-200 p-3 rounded-lg">
+                  {error}
+                </div>
+              ) : packageList.length === 0 ? (
+                <div className="bg-slate-800 p-3 rounded-lg text-center">
+                  Loading packages...
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {packageList.map(pkg => (
+                    <div key={pkg.id} className={`border rounded-lg p-3 hover:shadow-md bg-slate-800 ${
+                      selectedPackage?.id === pkg.id ? 'border-blue-500' : 'border-gray-700'
+                    }`}>
+                      <div className="flex justify-between items-start mb-2">
+                        <span className="font-semibold">Package {pkg.id}</span>
+                        <span className={`text-xs px-2 py-1 rounded-full ${pkg.status === 'delivered' ? 'bg-green-800 text-green-300' :
+                          pkg.status === 'in-transit' ? 'bg-blue-800 text-blue-300' :
+                            'bg-yellow-800 text-yellow-300'
+                          }`}>
+                          {pkg.status.replace('-', ' ')}
+                        </span>
+                      </div>
+                      <div className="text-sm space-y-1">
+                        <p><span className="text-gray-400">Order ID:</span> ORD-{pkg.id}</p>
+                        <p><span className="text-gray-400">Order Date:</span> {pkg.created_at.slice(0, 10)}</p>
+                        <p><span className="text-gray-400">To:</span> {pkg.name}</p>
+                        <p><span className="text-gray-400">Address:</span> {pkg.destination}</p>
+                      </div>
+                      <div className="mt-3 flex space-x-2">
+                        <button 
+                          className={`flex-1 text-white text-sm py-1 px-2 rounded ${
+                            selectedPackage?.id === pkg.id 
+                              ? 'bg-green-600 hover:bg-green-700' 
+                              : 'bg-blue-600 hover:bg-blue-700'
+                          }`}
+                          onClick={() => handleNavigate(pkg)}
+                        >
+                          {selectedPackage?.id === pkg.id ? 'Navigating' : 'Navigate'}
+                        </button>
+                        <button className="flex-1 bg-gray-700 text-gray-300 text-sm py-1 px-2 rounded hover:bg-gray-600">
+                          Details
+                        </button>
+                      </div>
                     </div>
-                    <div className="text-sm space-y-1">
-                      <p><span className="text-gray-400">Order ID:</span> ORD-{pkg.id}</p>
-                      <p><span className="text-gray-400">Order Date:</span> {pkg.created_at.slice(0,10)}</p>
-                      <p><span className="text-gray-400">To:</span> {pkg.name}</p>
-                      <p><span className="text-gray-400">Address:</span> {pkg.destination}</p>
-                    </div>
-                    <div className="mt-3 flex space-x-2">
-                      <button className="flex-1 bg-blue-600 text-white text-sm py-1 px-2 rounded hover:bg-blue-700">
-                        Navigate
-                      </button>
-                      <button className="flex-1 bg-gray-700 text-gray-300 text-sm py-1 px-2 rounded hover:bg-gray-600">
-                        Details
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  ))}
 
-                <button className="w-full py-3 bg-gray-700 text-gray-300 rounded hover:bg-gray-600 flex items-center justify-center">
-                  Load More Packages
-                </button>
-              </div>
+                  <button className="w-full py-3 bg-gray-700 text-gray-300 rounded hover:bg-gray-600 flex items-center justify-center">
+                    Load More Packages
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>

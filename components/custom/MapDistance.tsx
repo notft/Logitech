@@ -25,6 +25,8 @@ interface Place {
 }
 
 interface MapDistanceProps {
+  startLoc: string;
+  endLoc: string;
   onDistanceCalculated: (distance: number) => void;
   onClose: () => void;
 }
@@ -34,9 +36,8 @@ const StepIndicator: React.FC<{ currentStep: number, totalSteps: number }> = ({ 
     {Array.from({ length: totalSteps }).map((_, idx) => (
       <div
         key={idx}
-        className={`h-2 w-2 rounded-full transition-all duration-300 ${
-          idx < currentStep ? 'bg-yellow-500' : 'bg-white/20'
-        }`}
+        className={`h-2 w-2 rounded-full transition-all duration-300 ${idx < currentStep ? 'bg-yellow-500' : 'bg-white/20'
+          }`}
       />
     ))}
   </div>
@@ -81,7 +82,7 @@ const MapInstructions: React.FC = () => (
   </div>
 );
 
-const MapDistance: React.FC<MapDistanceProps> = ({ onDistanceCalculated, onClose }) => {
+const MapDistance: React.FC<MapDistanceProps> = ({ startLoc, endLoc, onDistanceCalculated, onClose }) => {
   const mapRef = useRef<L.Map | null>(null);
   const [startPoint, setStartPoint] = useState<[number, number] | null>(null);
   const [endPoint, setEndPoint] = useState<[number, number] | null>(null);
@@ -116,7 +117,7 @@ const MapDistance: React.FC<MapDistanceProps> = ({ onDistanceCalculated, onClose
         place.name.toLowerCase().startsWith(searchLower)
       );
       const containsMatch = places.filter(place =>
-        !place.name.toLowerCase().startsWith(searchLower) && 
+        !place.name.toLowerCase().startsWith(searchLower) &&
         place.name.toLowerCase().includes(searchLower)
       );
       const filtered = [...exactStarts, ...containsMatch].slice(0, 5);
@@ -136,7 +137,7 @@ const MapDistance: React.FC<MapDistanceProps> = ({ onDistanceCalculated, onClose
         place.name.toLowerCase().startsWith(searchLower)
       );
       const containsMatch = places.filter(place =>
-        !place.name.toLowerCase().startsWith(searchLower) && 
+        !place.name.toLowerCase().startsWith(searchLower) &&
         place.name.toLowerCase().includes(searchLower)
       );
       const filtered = [...exactStarts, ...containsMatch].slice(0, 5);
@@ -148,6 +149,15 @@ const MapDistance: React.FC<MapDistanceProps> = ({ onDistanceCalculated, onClose
       setShowEndSuggestions(false);
     }
   }, [endSearch, places]);
+
+  useEffect(() => {
+    if (startLoc && endLoc) {
+      const start = places.find(p => p.name === startLoc);
+      const end = places.find(p => p.name === endLoc);
+      if (start) handleStartSelect(start);
+      if (end) handleEndSelect(end);
+    }
+  }, [startLoc, endLoc, places]);
 
   const handleStartSelect = (place: Place) => {
     const point = [parseFloat(place.lat), parseFloat(place.lon)] as [number, number];
@@ -202,7 +212,7 @@ const MapDistance: React.FC<MapDistanceProps> = ({ onDistanceCalculated, onClose
       const closest = findClosestPlace([lat, lng]);
       if (closest) {
         setEndSearch(closest.name);
-        setShowEndSuggestions(false);  
+        setShowEndSuggestions(false);
       }
     }
   };
@@ -210,8 +220,8 @@ const MapDistance: React.FC<MapDistanceProps> = ({ onDistanceCalculated, onClose
   const findClosestPlace = (point: [number, number]) => {
     if (!places.length) return null;
     return places.reduce((closest, place) => {
-      const dist = Math.pow(point[0] - parseFloat(place.lat), 2) + 
-                  Math.pow(point[1] - parseFloat(place.lon), 2);
+      const dist = Math.pow(point[0] - parseFloat(place.lat), 2) +
+        Math.pow(point[1] - parseFloat(place.lon), 2);
       if (!closest || dist < closest.dist) {
         return { ...place, dist };
       }
@@ -223,7 +233,7 @@ const MapDistance: React.FC<MapDistanceProps> = ({ onDistanceCalculated, onClose
     setIsCalculating(false);
     setShowStartSuggestions(false);
     setShowEndSuggestions(false);
-    
+
     if (points.length >= 2) {
       setStartPoint(points[0]);
       setEndPoint(points[points.length - 1]);
@@ -249,10 +259,10 @@ const MapDistance: React.FC<MapDistanceProps> = ({ onDistanceCalculated, onClose
     const position = marker.getLatLng();
     const newPoint: [number, number] = [position.lat, position.lng];
     const closest = findClosestPlace(newPoint);
-    
+
     setShowStartSuggestions(false);
     setShowEndSuggestions(false);
-    
+
     if (isStart) {
       setStartPoint(newPoint);
       if (closest) {
@@ -340,9 +350,8 @@ const MapDistance: React.FC<MapDistanceProps> = ({ onDistanceCalculated, onClose
               onClose();
             }
           }}
-          className={`w-full py-3 ${
-            isCalculating ? 'bg-yellow-500/50' : 'bg-yellow-500 hover:bg-yellow-400'
-          } text-black font-medium rounded-lg transition-colors`}
+          className={`w-full py-3 ${isCalculating ? 'bg-yellow-500/50' : 'bg-yellow-500 hover:bg-yellow-400'
+            } text-black font-medium rounded-lg transition-colors`}
           disabled={isCalculating}
         >
           {isCalculating ? 'Calculating...' : 'Confirm Route'}
@@ -356,68 +365,64 @@ const MapDistance: React.FC<MapDistanceProps> = ({ onDistanceCalculated, onClose
   );
 
   return (
+      <MapContainer
+        ref={mapRef}
+        center={[10.0159, 76.3419]}
+        zoom={12}
+        style={{ height: "100%", width: "100%" }}
+        maxBounds={KERALA_BOUNDS}
+        minZoom={7}
+        maxZoom={18}
+        boundsOptions={{ padding: [50, 50] }}
+        bounds={KERALA_BOUNDS}
+        attributionControl={false}
+        className="rounded-xl"
+      >
+        <AttributionControl position="bottomright" prefix={false} />
+        <MapEvents onMapClick={handleMapClick} />
+        {/* <MapInstructions /> */}
 
-          <div className="relative h-full rounded-xl overflow-hidden order-2">
-            <MapContainer
-              ref={mapRef}
-              center={[10.0159, 76.3419]}
-              zoom={12}
-              style={{ height: "100%", width: "100%" }}
-              maxBounds={KERALA_BOUNDS}
-              minZoom={7}
-              maxZoom={18}
-              boundsOptions={{ padding: [50, 50] }}
-              bounds={KERALA_BOUNDS}
-              attributionControl={false}
-              className="rounded-xl"
-            >
-              <AttributionControl position="bottomright" prefix={false} />
-              <MapEvents onMapClick={handleMapClick} />
-              {/* <MapInstructions /> */}
-              
-              <TileLayer
-                // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://jawg.io">JawgIO</a>'
-                url={`https://tile.jawg.io/jawg-matrix/{z}/{x}/{y}.png?access-token=ElEpV0pssF7hprzkzXs3psMHA1UqpQQM1QZV1QATBiVo4d6LVJr3p2tyIsyJADRq`}
-                
-              />
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://jawg.io">JawgIO</a>'
+          url={`https://tile.jawg.io/jawg-matrix/{z}/{x}/{y}.png?access-token=ElEpV0pssF7hprzkzXs3psMHA1UqpQQM1QZV1QATBiVo4d6LVJr3p2tyIsyJADRq`}
 
-              {districtData && <GeoJSON data={districtData} pathOptions={{ 
-                fillColor: 'transparent',
-                weight: 2,
-                opacity: 0.1,
-                color: 'white',
-                fillOpacity: 0.1
-              }} />}
+        />
 
-              {startPoint && (
-                <Marker 
-                  position={startPoint} 
-                  icon={startIcon}
-                  eventHandlers={{ dragend: handleMarkerDrag(true) }}
-                />
-              )}
+        {districtData && <GeoJSON data={districtData} pathOptions={{
+          fillColor: 'transparent',
+          weight: 2,
+          opacity: 0.1,
+          color: 'white',
+          fillOpacity: 0.1
+        }} />}
 
-              {endPoint && (
-                <Marker 
-                  position={endPoint}
-                  icon={endIcon}
-                  eventHandlers={{ dragend: handleMarkerDrag(false) }}
-                />
-              )}
+        {startPoint && (
+          <Marker
+            position={startPoint}
+            icon={startIcon}
+            eventHandlers={{ dragend: handleMarkerDrag(true) }}
+          />
+        )}
 
-              {startPoint && endPoint && (
-                <RoutingControl
-                  key={routeKey}
-                  position="topleft"
-                  start={startPoint}
-                  end={endPoint}
-                  color="#ffff00"
-                  onWaypointChange={handleWaypointChange}
-                />
-              )}
-            </MapContainer>
-          {/* </div> */}
-        </div>
+        {endPoint && (
+          <Marker
+            position={endPoint}
+            icon={endIcon}
+            eventHandlers={{ dragend: handleMarkerDrag(false) }}
+          />
+        )}
+
+        {startPoint && endPoint && (
+          <RoutingControl
+            key={routeKey}
+            position="topleft"
+            start={startPoint}
+            end={endPoint}
+            color="#ffff00"
+            onWaypointChange={handleWaypointChange}
+          />
+        )}
+      </MapContainer>
   );
 };
 
