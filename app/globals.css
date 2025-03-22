@@ -2,7 +2,12 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
-
+*{
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
 :root {
   --radius: 0.625rem;
   --card: oklch(1 0 0);

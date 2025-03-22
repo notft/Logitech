@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
 "use client";
 
@@ -65,7 +64,6 @@ const DriverDashboard: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen bg-slate-950 text-gray-200">
-      {/* Top Navigation Bar */}
       <header className="bg-slate-900 text-white p-4 shadow-md">
         <div className="flex justify-between items-center">
           <h1 className="text-xl font-bold">Driver Dashboard</h1>
@@ -81,9 +79,7 @@ const DriverDashboard: React.FC = () => {
         </div>
       </header>
 
-      {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Left Panel - Map Area */}
         <div className="flex-grow p-4">
           <div className="bg-slate-900 rounded-lg shadow-md h-full flex flex-col border border-gray-700">
             <div className="p-4 border-b border-gray-700">
@@ -103,8 +99,6 @@ const DriverDashboard: React.FC = () => {
             </div>
           </div>
         </div>
-
-        {/* Right Panel - Package Details & Settings */}
         <div className="w-80 bg-slate-900 border-l border-gray-700 overflow-y-auto">
           {showSettings ? (
             <div className="p-4">
