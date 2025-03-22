@@ -8,20 +8,45 @@ import { Lock, AlertCircle, Loader2, User } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
-
+import { useRouter } from "next/navigation"
+import Cookies from "js-cookie"
 export default function LoginPage() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
-
+  const router = useRouter()
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError("")
-
+    try{
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      })
+      if(!res.ok){
+        setError("Invalid credentials. Please try again.");
+        return;
+      }
+      const data = await res.json()
+      Cookies.set("token", data.token);
+      Cookies.set("type", data.type);
+      if(data.type == "admin"){
+        router.push("/government/dashboard");
+      }else if(data.type == "driver"){
+        router.push("/driver");
+      }else{
+        router.push("/company");
+      }
+    }catch(error){
+      console.error("Error logging in:", error)
+    }finally{
+      setLoading(false)
+    }
     setTimeout(() => {
       setLoading(false)
       setError("Invalid credentials. Please try again.")
@@ -114,20 +139,7 @@ export default function LoginPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.3 }}
             >
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="remember"
-                  checked={rememberMe}
-                  onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-                  className="data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
-                />
-                <label
-                  htmlFor="remember"
-                  className="text-sm font-medium text-gray-400"
-                >
-                  Remember me
-                </label>
-              </div>
+              
               <Link href="/auth/register" className="text-sm text-blue-400 hover:text-blue-500 transition-colors">
                 Register
               </Link>
