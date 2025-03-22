@@ -13,10 +13,7 @@ export async function POST(req: Request) {
         if (!username || !password) {
             return NextResponse.json({ error: 'Missing username or password' }, { status: 400 });
         }
-        let rows;
-        
-        rows = await db('SELECT * FROM USERS WHERE LOWER(username) = LOWER($1)', [username]);
-           
+        const rows = await db('SELECT * FROM USERS WHERE LOWER(username) = LOWER($1)', [username]); 
         if (!rows || rows.length === 0) {
             return NextResponse.json({ error: 'Invalid email or password' }, { status: 400 });
         }
