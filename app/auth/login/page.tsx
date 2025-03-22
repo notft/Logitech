@@ -41,7 +41,10 @@ export default function LoginPage() {
             className="mb-8"
           >
             <div className="flex items-center gap-2 mb-10">
-              <h1 className="text-blue-400 text-3xl font-bold">LogiScale</h1>
+              <h1 className="text-3xl font-bold">
+                <span className="text-red-400">Logi</span>
+                <span className="text-white">Scale</span>
+              </h1>
             </div>
             <h2 className="text-gray-300 text-xl font-medium">Welcome back</h2>
             <p className="text-gray-400 mt-1">Please enter your details to sign in</p>
