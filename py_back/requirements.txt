@@ -1,6 +1,2 @@
-fastapi
-uvicorn
-opencv-python
-numpy
-pytesseract
-python-multipart
+requests
+python-dotenv
