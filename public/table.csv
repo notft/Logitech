@@ -1,0 +1,78 @@
+Sl No.,Unique ID,District,Name of location,Latitude,Longitude,Type of System
+1,KL - KEL - KMVD - 50 - AICS - 01-1,Thiruvananthapura,Parassala,8.3150151,77.1287226,Al Camera
+2,KL - KEL - KMVD - 50 - AICS - 01-2,Thiruvananthapura,Pambukala,8.3254417,77.0641614,Al Camera
+3,KL - KEL - KMVD - 50 - AICS - 01-3,Thiruvananthapura,Kovalam Jn,8.399849392,76.98087696,Al Camera
+4,KL - KEL - KMVD - 50 - AICS - 01-4,Thiruvananthapura,Neyyattinkara_2,8.4078907,77.0794932,Al Camera
+5,KL - KEL - KMVD - 50 - AICS - 01-5,Thiruvananthapura,Neyyattinkara_1,8.4080435,77.0792108,Al Camera
+6,KL - KEL - KMVD - 50 - AICS - 01-6,Thiruvananthapura,Thozhukkal,8.4167193,77.0803191,Al Camera
+7,KL - KEL - KMVD - 50 - AICS - 01-7,Thiruvananthapura,Balaramapuram_1,8.4263583,77.038985,Al Camera
+8,KL - KEL - KMVD - 50 - AICS - 01-8,Thiruvananthapura,Balaramapuram_2,8.427158591,77.03957643,Al Camera
+9,KL - KEL - KMVD - 50 - AICS - 01-9,Thiruvananthapura,Pallichal Jn,8.443115896,77.01732215,Al Camera
+10,KL - KEL - KMVD - 50 - AICS - 01-10,Thiruvananthapura,Thiruvallom,8.4431921,76.9524799,Al Camera
+11,KL - KEL - KMVD - 50 - AICS - 01-11,Thiruvananthapura,Kumarichantha,8.45163636,76.9470077,Al Camera
+12,KL - KEL - KMVD - 50 - AICS - 01-12,Thiruvananthapura,Vellayani Jn,8.4590336,76.9973992,Al Camera
+13,KL - KEL - KMVD - 50 - AICS - 01-13,Thiruvananthapura,Vellayani Jn_2,8.459099405,76.99749157,Al Camera
+14,KL - KEL - KMVD - 50 - AICS - 01-14,Thiruvananthapura,Manacaud Jn,8.4719437,76.9481288,Al Camera
+15,KL - KEL - KMVD - 50 - AICS - 01-15,Thiruvananthapura,Eenjakkal_1,8.480571432,76.93514396,Al Camera
+16,KL - KEL - KMVD - 50 - AICS - 01-16,Thiruvananthapura,Eenjakkal_2,8.480781673,76.93591442,Al Camera
+17,KL - KEL - KMVD - 50 - AICS - 01-17,Thiruvananthapura,"Killipalam , near PRS hopspital",8.481339441,76.9595876,Al Camera
+18,KL - KEL - KMVD - 50 - AICS - 01-18,Thiruvananthapura,Killipalam,8.481502261,76.95821229,Al Camera
+19,KL - KEL - KMVD - 50 - AICS - 01-19,Thiruvananthapura,Power house road,8.484994424,76.95298903,Al Camera
+20,KL - KEL - KMVD - 50 - AICS - 01-20,Thiruvananthapura,East fort stretch,8.48596404,76.94781505,Al Camera
+21,KL - KEL - KMVD - 50 - AICS - 01-21,Thiruvananthapura,Thambanoor,8.4870139,76.9521384,Al Camera
+22,KL - KEL - KMVD - 50 - AICS - 01-22,Thiruvananthapura,Malayinkeezh,8.4875062,77.0364776,Al Camera
+23,KL - KEL - KMVD - 50 - AICS - 01-23,Thiruvananthapura,Kaithamukk,8.489562938,76.94019489,Al Camera
+24,KL - KEL - KMVD - 50 - PVDS - 01-24,Thiruvananthapura,MG Road,8.490216194,76.9473004,PVDS
+25,KL - KEL - KMVD - 50 - AICS - 01-25,Thiruvananthapura,Poojapura,8.4910375,76.9738924,Al Camera
+26,KL - KEL - KMVD - 50 - AICS - 01-26,Thiruvananthapura,All saints,8.494618515,76.9098068,Al Camera
+27,KL - KEL - KMVD - 50 - AICS - 01-27,Thiruvananthapura,All saints_2,8.494954755,76.90943129,Al Camera
+28,KL - KEL - KMVD - 50 - AICS - 01-28,Thiruvananthapura,Pettah,8.49520478,76.92757811,Al Camera
+29,KL - KEL - KMVD - 50 - AICS - 01-29,Thiruvananthapura,Vettukadu,8.4965309,76.8987359,Al Camera
+30,KL - KEL - KMVD - 50 - PVDS - 01-31,Thiruvananthapura,Holy Angels Convent road,8.498014727,76.94286201,PVDS
+31,KL - KEL - KMVD - 50 - AICS - 01-32,Thiruvananthapura,AKG center,8.500406184,76.94618963,Al Camera
+32,KL - KEL - KMVD - 50 - AICS - 01-33,Thiruvananthapura,Mangattukadav,8.5004297,77.0062457,Al Camera
+33,KL - KEL - KMVD - 50 - AICS - 01-34,Thiruvananthapura,"Vazhuthacaud , WC jn",8.5004554,76.9582906,Al Camera
+34,KL - KEL - KMVD - 50 - AICS - 01-35,Thiruvananthapura,"Palayam , near AKG center",8.500657531,76.94628283,Al Camera
+35,KL - KEL - KMVD - 50 - SVDS - 01-36,Thiruvananthapura,Chakka bypass,8.5021486,76.9127634,SVDS
+36,KL - KEL - KMVD - 50 - PVDS - 01-37,Thiruvananthapura,Palayam,8.502110568,76.95008822,PVDS
+37,KL - KEL - KMVD - 50 - AICS - 01-38,Thiruvananthapura,Kattakada_3,8.5023271,77.0718469,Al Camera
+38,KL - KEL - KMVD - 50 - AICS - 01-39,Thiruvananthapura,Edapazhanji Bridge,8.5045791,76.9705438,Al Camera
+39,KL - KEL - KMVD - 50 - AICS - 01-40,Thiruvananthapura,Kattakada_1,8.5060175,77.079171,Al Camera
+40,KL - KEL - KMVD - 50 - AICS - 01-41,Thiruvananthapura,Kattakada_2,8.5074106,77.0869781,Al Camera
+41,KL - KEL - KMVD - 50 - AICS - 01-42,Thiruvananthapura,Kundamankadavu_2,8.5088349,77.0033788,Al Camera
+42,KL - KEL - KMVD - 50 - AICS - 01-43,Thiruvananthapura,Kundamankadavu_1,8.509155,77.0048124,Al Camera
+43,KL - KEL - KMVD - 50 - AICS - 01-44,Thiruvananthapura,Veli,8.5123626,76.8908583,Al Camera
+44,KL - KEL - KMVD - 50 - PVDS - 01-45,Thiruvananthapura,"KIMS Hopspital Jn , Venpalavattam",8.513192199,76.91054508,PVDS
+45,KL - KEL - KMVD - 50 - AICS - 01-46,Thiruvananthapura,Venpalavattom near KIMS,8.5140597,76.913645,Al Camera
+46,KL - KEL - KMVD - 50 - AICS - 01-47,Thiruvananthapura,"Venpalavattam , Poonthi road",8.5141757,76.9136729,Al Camera
+47,KL - KEL - KMVD - 50 - AICS - 01-48,Thiruvananthapura,Vilappilsala,8.5218664,77.0346773,Al Camera
+48,KL - KEL - KMVD - 50 - AICS - 01-49,Thiruvananthapura,Pattom,8.5230483,76.9407198,Al Camera
+49,KL - KEL - KMVD - 50 - AICS - 01-50,Thiruvananthapura,"Kottamukk , Aakkulam",8.5230868,76.9122663,Al Camera
+50,KL - KEL - KMVD - 50 - AICS - 01-51,Thiruvananthapura,"Pulimood Jn , Vattiyoorkav",8.5235036,76.9862784,Al Camera
+51,KL - KEL - KMVD - 50 - PVDS - 01-52,Thiruvananthapura,Pattom ( PVDS ),8.526084221,76.93893425,PVDS
+52,KL - KEL - KMVD - 50 - AICS - 01-53,Thiruvananthapura,Kallikkaad,8.5294323,77.1232054,Al Camera
+53,KL - KEL - KMVD - 50 - AICS - 01-54,Thiruvananthapura,Ulloor,8.529678,76.9326316,Al Camera
+54,KL - KEL - KMVD - 50 - PVDS - 01-55,Thiruvananthapura,Ambalamukk,8.529742424,76.96094949,PVDS
+55,KL - KEL - KMVD - 50 - AICS - 01-56,Thiruvananthapura,Poovachal,8.5347751,77.0867638,Al Camera
+56,KL - KEL - KMVD - 50 - AICS - 01-57,Thiruvananthapura,Puliyarakonam,8.5354007,77.0161863,Al Camera
+57,KL - KEL - KMVD - 50 - SVDS - 01-58,Thiruvananthapura,Bypass near UST Global,8.537797443,76.87918805,SVDS
+58,KL - KEL - KMVD - 50 - AICS - 01-59,Thiruvananthapura,"Vazhayila , To Peroorkada",8.5426433,76.9711209,Al Camera
+59,KL - KEL - KMVD - 50 - AICS - 01-60,Thiruvananthapura,Nettayam,8.5437866,76.9876427,Al Camera
+60,KL - KEL - KMVD - 50 - AICS - 01-61,Thiruvananthapura,"Vazhayila , To Nedumangadu",8.5450854,76.9727058,Al Camera
+61,KL - KEL - KMVD - 50 - AICS - 01-62,Thiruvananthapura,Kottamughal_1,8.5521029,76.9423557,Al Camera
+62,KL - KEL - KMVD - 50 - AICS - 01-63,Thiruvananthapura,Kottamughal_2,8.5522066,76.9426095,Al Camera
+63,KL - KEL - KMVD - 50 - AICS - 01-64,Thiruvananthapura,"Mannanthala , Pothencode road",8.5607153,76.9434491,Al Camera
+64,KL - KEL - KMVD - 50 - AICS - 01-65,Thiruvananthapura,"Mannanthala , Peroorkada road",8.5607214,76.9434257,Al Camera
+65,KL - KEL - KMVD - 50 - AICS - 01-66,Thiruvananthapura,Paravankunnu Jn .,8.5678039,76.8733965,Al Camera
+66,KL - KEL - KMVD - 50 - AICS - 01-67,Thiruvananthapura,"Vettroad , towards Pothencode",8.5824067,76.8638977,Al Camera
+67,KL - KEL - KMVD - 50 - AICS - 01-68,Thiruvananthapura,"Vettroad , Pothencode road",8.5844392,76.8704745,Al Camera
+68,KL - KEL - KMVD - 50 - AICS - 01-69,Thiruvananthapura,Vattappara_1,8.5928899,76.9525046,Al Camera
+69,KL - KEL - KMVD - 50 - AICS - 01-70,Thiruvananthapura,Vattappara,8.5930096,76.9514364,Al Camera
+70,KL - KEL - KMVD - 50 - AICS - 01-71,Thiruvananthapura,"Nedumangad , Peroorkada road",8.6006022,76.9959209,Al Camera
+71,KL - KEL - KMVD - 50 - AICS - 01-72,Thiruvananthapura,"Nedumangadu , Kulavikkonam",8.6015071,77.0076317,Al Camera
+72,KL - KEL - KMVD - 50 - AICS - 01-73,Thiruvananthapura,"Nedumangadu , Ponmudi road",8.6078024,77.0054544,Al Camera
+73,KL - KEL - KMVD - 50 - AICS - 01-74,Thiruvananthapura,Nedumangadu,8.614673,76.9977609,Al Camera
+74,KL - KEL - KMVD - 50 - AICS - 01-75,Thiruvananthapura,Nedumangadu Vembayam road,8.6161716,76.9898788,Al Camera
+75,KL - KEL - KMVD - 50 - AICS - 01-76,Thiruvananthapura,"MC road , Venjaramood",8.6712494,76.9114421,Al Camera
+76,KL - KEL - KMVD - 50 - AICS - 01-77,Thiruvananthapura,Thandrampoyka,8.6871302,76.9067379,Al Camera
+77,KL - KEL - KMVD - 50 - AICS - 01-78,Thiruvananthapura,"Mama Moonnumukku , Attingal",8.6883583,76.8238267,Al Camera
