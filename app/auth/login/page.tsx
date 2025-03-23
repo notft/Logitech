@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "motion/react"
 import Link from "next/link"
 import { Lock, AlertCircle, Loader2, User } from "lucide-react"
 import { Input } from "@/components/ui/input"

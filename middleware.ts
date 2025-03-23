@@ -37,12 +37,12 @@ export async function middleware(req: NextRequest) {
     }
 
     if (user === "admin" && (pathname === "/company" || pathname === "/driver")) {
-      return NextResponse.redirect(new URL("/government", req.url));
+      return NextResponse.redirect(new URL("/government/dashboard", req.url));
     }
-    if (user === "company" && (pathname === "/government" || pathname === "/driver")) {
+    if (user === "company" && (pathname === "/government/dashboard" || pathname === "/driver")) {
       return NextResponse.redirect(new URL("/company", req.url));
     }
-    if (user === "driver" && (pathname === "/government" || pathname === "/company")) {
+    if (user === "driver" && (pathname === "/government/dashboard" || pathname === "/company")) {
       return NextResponse.redirect(new URL("/driver", req.url));
     }
 

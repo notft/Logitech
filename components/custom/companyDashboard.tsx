@@ -1,21 +1,21 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { deleteCookie,getCookie } from "cookies-next";
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
 
+
 interface Order {
-  id: string;
+  id: number; // Changed from string to number
   name: string;
   start_location: string;
   destination: string;
   type: string;
   status: 'pending' | 'processing' | 'in-transit' | 'delivered';
-  createdAt: string;
+  created_at: string; // Changed from createdAt to created_at
   driver?: string;
 }
-
 const CompanyDashboard: React.FC = () => {
     const router = useRouter();
   const [activeTab, setActiveTab] = useState<'orders' | 'newOrder'>('orders');
@@ -24,47 +24,48 @@ const CompanyDashboard: React.FC = () => {
 
 
   useEffect(() => {
-    const token = getCookie("token")
-    if (!token) {
-      router.push("/auth/login")
-      return;
-    }
+    // const token = Cookies.get("token")
+    // if (!token) {
+    //   router.push("/auth/login")
+    //   return;
+    // }
   
 
     const fetchOrders = async () => {
-        try {
-          const response = await fetch("/api/company", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            }
-          });
-  
-          if (response.ok) {
-            const data = await response.json();
-            setOrders(data.orders || []);
-          } else {
-            console.error("Failed to fetch orders");
-            
-            // Fallback to local storage if API fails
-            const localOrders = localStorage.getItem('companyOrders');
-            if (localOrders) {
-              setOrders(JSON.parse(localOrders));
-            }
+      try {
+        const response = await fetch("/api/package", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
           }
-        } catch (error) {
-          console.error("Error fetching orders:", error);
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          // The API returns an array directly instead of {orders: [...]}
+          // So we need to use the data array directly
+          setOrders(Array.isArray(data) ? data : []);
+        } else {
+          console.error("Failed to fetch orders");
           
-          // Fallback to local storage on error
+          // Fallback to local storage if API fails
           const localOrders = localStorage.getItem('companyOrders');
           if (localOrders) {
             setOrders(JSON.parse(localOrders));
           }
-        } finally {
-          setLoading(false);
         }
-      };
-  
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+        
+        // Fallback to local storage on error
+        const localOrders = localStorage.getItem('companyOrders');
+        if (localOrders) {
+          setOrders(JSON.parse(localOrders));
+        }
+      } finally {
+        setLoading(false);
+      }
+  };
       fetchOrders();
     }, [router]);
 
@@ -139,9 +140,9 @@ const CompanyDashboard: React.FC = () => {
 
     const handleLogout = () => {
     
-    deleteCookie("token")
-    deleteCookie("user")
-    deleteCookie("session")
+    Cookies.remove("token")
+    Cookies.remove("user")
+    Cookies.remove("session")
 
     setTimeout(() => {
       window.location.href = "/auth/login"
@@ -227,7 +228,7 @@ const CompanyDashboard: React.FC = () => {
                         <td className="py-3 px-4 font-medium">{order.id}</td>
                         <td className="py-3 px-4">{order.destination}</td>
                         <td className="py-3 px-4">{order.type}</td>
-                        <td className="py-3 px-4">{formatDate(order.createdAt)}</td>    
+                        <td className="py-3 px-4">{formatDate(order. created_at)}</td>    
                         <td className="py-3 px-4">
                           
                         </td>
