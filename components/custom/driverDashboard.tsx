@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import {Button} from "@/components/ui/button"
 import Cookies from "js-cookie";
+import html2canvas from 'html2canvas-pro';
 interface Package {
   id: string;
   destination: string;
@@ -25,8 +26,8 @@ interface DriverProfile {
 }
 
 const DriverDashboard: React.FC = () => {
-  const MapDistance = useMemo(() => dynamic(
-    () => import('@/components/custom/MapDistance'),
+  const Map = useMemo(() => dynamic(
+    () => import('@/components/custom/Map'),
     { 
       loading: () => <p>A map is loading</p>,
       ssr: false
@@ -112,6 +113,38 @@ const userId =Cookies.get("ussrId")
     }, 50);
   };
 
+  function base64ToBlob(base64, mimeType) {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mimeType });
+  }
+
+  const calculateRoute = async () => {
+    html2canvas(document.getElementById("map-container")!, { useCORS: true, allowTaint: true }).then(async (canvas) => {
+      const imgBase64 = canvas.toDataURL("image/png").split(",")[1];
+      const blob = base64ToBlob(imgBase64, "image/png");
+    
+      const formData = new FormData();
+      formData.append("file", blob, "screenshot.png"); // Provide a filename
+    
+      try {
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+        const result = await response.json();
+        alert("Image uploaded to Cloudinary: " + result.imgUrl);
+      } catch (error) {
+        console.error("Upload failed:", error);
+      }
+    });
+  };
+  
+
   return (
     <div className="flex flex-col h-screen bg-slate-950 text-gray-200">
       <header className="bg-slate-900 text-white p-4 shadow-md">
@@ -145,10 +178,12 @@ const userId =Cookies.get("ussrId")
                   <p>Loading map...</p>
                 </div>
               ) : (
-                <div className="w-full h-full bg-slate-800 flex items-center justify-center border-2 border-dashed border-gray-600">
+                <div className="w-full h-full bg-slate-800 flex items-center justify-center border-2 border-dashed border-gray-600"
+                id="map-container"
+                >
                   {showMap && startLoc && endLoc ? (
-                    <MapDistance
-                      key={`${startLoc}-${endLoc}`} 
+                    <Map
+                      key={`${startLoc}-${endLoc}`} // Add key to force re-render when locations change
                       startLoc={startLoc}
                       endLoc={endLoc}
                       onDistanceCalculated={(distance) => {
@@ -259,10 +294,12 @@ const userId =Cookies.get("ussrId")
                           }`}
                           onClick={() => handleNavigate(pkg)}
                         >
-                          {selectedPackage?.id === pkg.id ? 'Navigating' : 'Navigate'}
+                          {selectedPackage?.id === pkg.id ? 'Navigated' : 'Navigate'}
                         </button>
-                        <button className="flex-1 bg-gray-700 text-gray-300 text-sm py-1 px-2 rounded hover:bg-gray-600">
-                          Details
+                        <button className="flex-1 bg-gray-700 text-gray-300 text-sm py-1 px-2 rounded hover:bg-gray-600"
+                        onClick={calculateRoute}
+                        >
+                          Calculate Route
                         </button>
                       </div>
                     </div>
