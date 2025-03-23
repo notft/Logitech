@@ -382,6 +382,7 @@ const Map: React.FC<Map> = ({ startLoc, endLoc, onDistanceCalculated, onClose })
       {routeMode.map((mode, index) => (
         <MapContainer
           ref={mapRef}
+          key={index}
           center={index === 0 ? [9.615, 76.5715] : index === 1 ? [9.60245, 76.5867] : [10.0159, 76.3419]}
           zoom={index === 0 ? 11 : index === 1 ? 11 : 12}
           style={{ height: "100%", width: "100%" }}
@@ -391,7 +392,7 @@ const Map: React.FC<Map> = ({ startLoc, endLoc, onDistanceCalculated, onClose })
           boundsOptions={{ padding: [50, 50] }}
           bounds={KERALA_BOUNDS}
           attributionControl={false}
-          className="rounded-xl"
+          className='m-1'
         >
           <AttributionControl position="bottomright" prefix={false} />
           <MapEvents onMapClick={handleMapClick} />
