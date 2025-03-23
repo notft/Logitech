@@ -4,17 +4,14 @@ import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
-
-
 interface Order {
-  id: number; // Changed from string to number
+  id: number; 
   name: string;
   start_location: string;
   destination: string;
   type: string;
   status: 'pending' | 'processing' | 'in-transit' | 'delivered';
-  created_at: string; // Changed from createdAt to created_at
-  driver?: string;
+  created_at: string;
 }
 const CompanyDashboard: React.FC = () => {
     const router = useRouter();
@@ -42,13 +39,10 @@ const CompanyDashboard: React.FC = () => {
   
         if (response.ok) {
           const data = await response.json();
-          // The API returns an array directly instead of {orders: [...]}
-          // So we need to use the data array directly
           setOrders(Array.isArray(data) ? data : []);
         } else {
           console.error("Failed to fetch orders");
           
-          // Fallback to local storage if API fails
           const localOrders = localStorage.getItem('companyOrders');
           if (localOrders) {
             setOrders(JSON.parse(localOrders));
@@ -57,7 +51,6 @@ const CompanyDashboard: React.FC = () => {
       } catch (error) {
         console.error("Error fetching orders:", error);
         
-        // Fallback to local storage on error
         const localOrders = localStorage.getItem('companyOrders');
         if (localOrders) {
           setOrders(JSON.parse(localOrders));
@@ -117,13 +110,13 @@ const CompanyDashboard: React.FC = () => {
 
 
     const createdOrder = {
-        name:newOrderForm.name,
-        id: `ORD-${String(orders.length + 1).padStart(3, "0")}`,
+        name: newOrderForm.name,
+        id: orders.length + 1,
         start_location: newOrderForm.start_location,
         destination: newOrderForm.destination,
         type: newOrderForm.type,
         status: "pending" as const,
-        createdAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
       };
 
     setOrders([createdOrder, ...orders]);

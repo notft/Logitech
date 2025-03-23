@@ -186,9 +186,9 @@ export default function GovDash() {
   
     try {
       const formData = new FormData();
-      formData.append("file", videoFile); // Change "video" to "file" to match backend parameter name
+      formData.append("file", videoFile); 
   
-      const response = await fetch("http://localhost:8000/plate", {
+      const response = await fetch("https://logiscaleapi.abinthomas.dev/plate", {
         method: "POST",
         body: formData,
       });
@@ -530,6 +530,7 @@ export default function GovDash() {
             >
               Upload
             </Button>
+            
             <motion.div
               className="flex bg-gray-900/50 rounded-md p-1 border border-gray-800"
               whileHover={{ scale: 1.05 }}

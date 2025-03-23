@@ -113,9 +113,9 @@ const userId =Cookies.get("ussrId")
     }, 50);
   };
 
-  function base64ToBlob(base64, mimeType) {
+  function base64ToBlob(base64: string, mimeType: string): Blob {
     const byteCharacters = atob(base64);
-    const byteNumbers = new Array(byteCharacters.length);
+    const byteNumbers: number[] = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
       byteNumbers[i] = byteCharacters.charCodeAt(i);
     }
@@ -129,7 +129,7 @@ const userId =Cookies.get("ussrId")
       const blob = base64ToBlob(imgBase64, "image/png");
     
       const formData = new FormData();
-      formData.append("file", blob, "screenshot.png"); // Provide a filename
+      formData.append("file", blob, "screenshot.png"); 
     
       try {
         const response = await fetch("/api/upload", {
@@ -183,7 +183,7 @@ const userId =Cookies.get("ussrId")
                 >
                   {showMap && startLoc && endLoc ? (
                     <Map
-                      key={`${startLoc}-${endLoc}`} // Add key to force re-render when locations change
+                      key={`${startLoc}-${endLoc}`} 
                       startLoc={startLoc}
                       endLoc={endLoc}
                       onDistanceCalculated={(distance) => {
