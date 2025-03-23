@@ -13,3 +13,10 @@ export const endIcon = L.icon({
   iconAnchor: [16, 32],  
   popupAnchor: [0, -32]   
 });
+
+export const cameraIcon = L.icon({
+  iconUrl: '/camera.png',
+  iconSize: [32, 32],    
+  iconAnchor: [16, 32],  
+  popupAnchor: [0, -32]   
+});

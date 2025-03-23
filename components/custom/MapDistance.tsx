@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect, useRef } from 'react';
 import {
   MapContainer,
@@ -10,8 +11,9 @@ import {
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import RoutingControl from './RoutingControl';
-import { startIcon, endIcon } from './MarkerIcons';
+import { startIcon, endIcon, cameraIcon } from './MarkerIcons';
 import { MapPin, Target, Ruler, X } from 'lucide-react';
+import "leaflet.heat";
 
 const KERALA_BOUNDS: L.LatLngBoundsExpression = [
   [8.2, 74.8],
@@ -107,6 +109,16 @@ const MapDistance: React.FC<MapDistanceProps> = ({ startLoc, endLoc, onDistanceC
     fetch('district.geojson')
       .then(res => res.json())
       .then(data => setDistrictData(data))
+      .catch(err => console.error(err));
+
+    fetch('camera.json')
+      .then(res => res.json())
+      .then(data => {
+        Array.from(data).forEach((camera: any) => {
+          mapRef.current &&
+            L.marker([camera.Latitude, camera.Longitude], { icon: cameraIcon, alt: 'camera' }).addTo(mapRef.current);
+        });
+      })
       .catch(err => console.error(err));
   }, []);
 
@@ -365,64 +377,59 @@ const MapDistance: React.FC<MapDistanceProps> = ({ startLoc, endLoc, onDistanceC
   );
 
   return (
-      <MapContainer
-        ref={mapRef}
-        center={[10.0159, 76.3419]}
-        zoom={12}
-        style={{ height: "100%", width: "100%" }}
-        maxBounds={KERALA_BOUNDS}
-        minZoom={7}
-        maxZoom={18}
-        boundsOptions={{ padding: [50, 50] }}
-        bounds={KERALA_BOUNDS}
-        attributionControl={false}
-        className="rounded-xl"
-      >
-        <AttributionControl position="bottomright" prefix={false} />
-        <MapEvents onMapClick={handleMapClick} />
-        {/* <MapInstructions /> */}
+    <MapContainer
+      ref={mapRef}
+      center={[10.0159, 76.3419]}
+      zoom={12}
+      style={{ height: "100%", width: "100%" }}
+      maxBounds={KERALA_BOUNDS}
+      minZoom={7}
+      maxZoom={18}
+      boundsOptions={{ padding: [50, 50] }}
+      bounds={KERALA_BOUNDS}
+      attributionControl={false}
+      className="rounded-xl"
+    >
+      <AttributionControl position="bottomright" prefix={false} />
+      <MapEvents onMapClick={handleMapClick} />
+      {/* <MapInstructions /> */}
 
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://jawg.io">JawgIO</a>'
-          url={`https://tile.jawg.io/jawg-matrix/{z}/{x}/{y}.png?access-token=ElEpV0pssF7hprzkzXs3psMHA1UqpQQM1QZV1QATBiVo4d6LVJr3p2tyIsyJADRq`}
+      <TileLayer
+        // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://jawg.io">JawgIO</a>'
+        url={`https://tile.jawg.io/jawg-matrix/{z}/{x}/{y}.png?access-token=ElEpV0pssF7hprzkzXs3psMHA1UqpQQM1QZV1QATBiVo4d6LVJr3p2tyIsyJADRq`}
+      />
 
+      {districtData && <GeoJSON data={districtData} pathOptions={{
+        fillColor: 'transparent',
+        weight: 2,
+        opacity: 0.1,
+        color: 'white',
+        fillOpacity: 0.1
+      }} />}
+
+      {startPoint && endPoint && (
+        <RoutingControl
+          fast={false}
+          key={routeKey}
+          position="topleft"
+          start={startPoint}
+          end={endPoint}
+          color="#ffffff"
+          onWaypointChange={handleWaypointChange}
         />
-
-        {districtData && <GeoJSON data={districtData} pathOptions={{
-          fillColor: 'transparent',
-          weight: 2,
-          opacity: 0.1,
-          color: 'white',
-          fillOpacity: 0.1
-        }} />}
-
-        {startPoint && (
-          <Marker
-            position={startPoint}
-            icon={startIcon}
-            eventHandlers={{ dragend: handleMarkerDrag(true) }}
-          />
-        )}
-
-        {endPoint && (
-          <Marker
-            position={endPoint}
-            icon={endIcon}
-            eventHandlers={{ dragend: handleMarkerDrag(false) }}
-          />
-        )}
-
-        {startPoint && endPoint && (
-          <RoutingControl
-            key={routeKey}
-            position="topleft"
-            start={startPoint}
-            end={endPoint}
-            color="#ffff00"
-            onWaypointChange={handleWaypointChange}
-          />
-        )}
-      </MapContainer>
+      )}
+      {startPoint && endPoint && (
+        <RoutingControl
+          fast={true}
+          key={routeKey + 1}
+          position="topleft"
+          start={startPoint}
+          end={endPoint}
+          color="#ffff00"
+          onWaypointChange={handleWaypointChange}
+        />
+      )}
+    </MapContainer>
   );
 };
 

@@ -1,6 +1,7 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import MapDistance from '@/components/custom/MapDistance';
+import React, { useState, useEffect, useMemo } from 'react';
+// import MapDistance from '@/components/custom/MapDistance';
+import dynamic from 'next/dynamic';
 
 interface Package {
   id: string;
@@ -23,6 +24,13 @@ interface DriverProfile {
 }
 
 const DriverDashboard: React.FC = () => {
+  const MapDistance = useMemo(() => dynamic(
+    () => import('@/components/custom/MapDistance'),
+    { 
+      loading: () => <p>A map is loading</p>,
+      ssr: false
+    }
+  ), [])
   const [isMapLoading, setIsMapLoading] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [packageList, setPackageList] = useState<Package[]>([]);
