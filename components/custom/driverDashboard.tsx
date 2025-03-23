@@ -1,13 +1,10 @@
 "use client";
 import React, { useState, useEffect, useMemo } from 'react';
-// import MapDistance from '@/components/custom/MapDistance';
 import dynamic from 'next/dynamic';
 import { Button } from "@/components/ui/button"
 import Cookies from "js-cookie";
 import html2canvas from 'html2canvas-pro';
-// import toast from 'react-hot-toast';
-import { CoreMessage, generateText } from 'ai';
-import { createGoogleGenerativeAI } from '@ai-sdk/google';
+import toast from 'react-hot-toast';
 
 interface Package {
   id: string;
@@ -46,6 +43,7 @@ const DriverDashboard: React.FC = () => {
   const [startLoc, setStartLoc] = useState<string | null>(null);
   const [endLoc, setEndLoc] = useState<string | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
+  const [selectedRoute, setSelectedRoute] = useState<number>(0);
 
   const [drivername, setDriverName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -118,72 +116,59 @@ const DriverDashboard: React.FC = () => {
   };
 
   const calculateRoute = async () => {
-    try {
-      const mapContainer = document.getElementById('map-container');
-      if (!mapContainer) throw new Error('Map container element not found');
-  
-      const canvas = await html2canvas(mapContainer, { useCORS: true });
-      const dataUrl = canvas.toDataURL('image/png');
-      
-      const blob = await (async () => {
-        const res = await fetch(dataUrl);
-        return res.blob();
-      })();
-      
-      const formData = new FormData();
-      formData.append('file', blob, 'screenshot.png');
-  
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(`Upload failed: ${errorData.error || 'Unknown error'}`);
+    const ss_request = new Promise(async (resolve, reject) => {
+      try {
+        const mapContainer = document.getElementById('map-container');
+        if (!mapContainer) throw new Error('Map container element not found');
+        const canvas = await html2canvas(mapContainer, { useCORS: true });
+        const dataUrl = canvas.toDataURL('image/png');
+        const blob = await (async () => {
+          const res = await fetch(dataUrl);
+          return res.blob();
+        })();
+        const formData = new FormData();
+        formData.append('file', blob, 'screenshot.png');
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(`Upload failed: ${errorData.error || 'Unknown error'}`);
+        }
+        const result = await response.json();
+        console.log('Upload result:', result);
+        resolve(result);
+      } catch (error) {
+        reject(error);
       }
-      
-      const result = await response.json();
-      console.log('Upload result:', result);
-  
-      return result.url;
-    } catch (error) {
-      console.error('Error uploading map screenshot:', error);
-      throw error;
-    }
+    });
+    toast.promise(
+      ss_request,
+      {
+        loading: "Fetching navigation routes...",
+        success: (data: any) => {
+          fetch('/api/ai', {
+            method: 'POST',
+            body: JSON.stringify({ imageUrl: data.url }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }).then(async (response) => {
+            if (!response.ok) {
+              throw new Error('Failed to fetch route');
+            }
+            const selected = await response.json();
+            setSelectedRoute(selected);
+            console.log(selected);
+            toast.success(`The best selected route is ${selected}`, { duration: 10000 });
+          })
+          return "Navigation Route Generated!";
+        },
+        error: (err) => "Error Occurred!",
+      },
+    );
   };
-  
-    const llmFunc = async (imageUrl: string) => {
-      const system_prompt = `<system>You are a route analysis model which will be presented with an image url which 
-is divided into 3 equal sections. Each section shows a different route to the same 
-destination. You must use your vision and select the most efficient route. The left 
-most box will be 1, the middle box will be 2 and the right most will be 3, Reply with 
-just one number answer. Will be 1, 2 or 3. You shall not send another response besides these 
-3 numbers.</system>`;
-      const prompt = [];
-      prompt.push({ role: 'user', content: [{ type: "text", text: "This is the image" }] } as CoreMessage);
-      const google = createGoogleGenerativeAI({
-        apiKey: process.env.GOOGLE_API_KEY,
-      });
-      const text = await generateText({
-        model: google("gemini-2.0-flash-001"),
-        system: system_prompt,
-        messages: prompt,
-      });
-      return text;
-    }
-    // toast.promise(
-    //   llm,
-    //   {
-    //     loading: "Fetching the best navigation route...",
-    //     success: (data: any) => {
-    //       console.log(llmFunc(data.imageUrl));
-    //       return "Navigation Route Generated!";
-    //     },
-    //     error: (err) => "Error Occurred!",
-    //   },
-    // );
-
 
   return (
     <div className="flex flex-col h-screen bg-slate-950 text-gray-200">
@@ -223,7 +208,7 @@ just one number answer. Will be 1, 2 or 3. You shall not send another response b
                 >
                   {showMap && startLoc && endLoc ? (
                     <Map
-                      key={`${startLoc}-${endLoc}`} 
+                      key={`${startLoc}-${endLoc}`}
                       startLoc={startLoc}
                       endLoc={endLoc}
                       onDistanceCalculated={(distance) => {
@@ -327,8 +312,8 @@ just one number answer. Will be 1, 2 or 3. You shall not send another response b
                       <div className="mt-3 flex space-x-2">
                         <button
                           className={`flex-1 text-white text-sm py-1 px-2 rounded ${selectedPackage?.id === pkg.id
-                              ? 'bg-green-600 hover:bg-green-700'
-                              : 'bg-blue-600 hover:bg-blue-700'
+                            ? 'bg-green-600 hover:bg-green-700'
+                            : 'bg-blue-600 hover:bg-blue-700'
                             }`}
                           onClick={() => handleNavigate(pkg)}
                         >

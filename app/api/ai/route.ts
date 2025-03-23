@@ -1,4 +1,4 @@
-import { CoreMessage, generateText } from 'ai';
+import { CoreMessage, generateObject, generateText } from 'ai';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 
 export async function POST(req: Request) {
@@ -15,12 +15,14 @@ export async function POST(req: Request) {
         apiKey: process.env.GOOGLE_API_KEY,
     });
     try {
-        const { text } = await generateText({
+        const { object } = await generateObject({
             model: google("gemini-2.0-flash-001"),
             system: system_prompt,
             messages: prompt,
+            output: 'enum',
+            enum: ['1', '2', '3'],
         });
-        return new Response(text, {
+        return new Response(object, {
             headers: { 'Content-Type': 'application/json' },
         });
     } catch (error) {
