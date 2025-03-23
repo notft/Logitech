@@ -12,6 +12,7 @@ interface RoutingMachineProps {
   start: [number, number];
   end: [number, number];
   color: string;
+  routeMode: string;
   onWaypointChange?: (points: [number, number][], distance?: number) => void;
 }
 
@@ -21,6 +22,7 @@ const createRoutineMachineLayer = ({
   start,
   end,
   color,
+  routeMode,
   onWaypointChange
 }: RoutingMachineProps) => {
   const instance = L.Routing.control({
@@ -33,13 +35,19 @@ const createRoutineMachineLayer = ({
       styles: [{ color, weight: 6, opacity: 0.7 }], 
       extendToWaypoints: false,
       missingRouteTolerance: 100,
-      addWaypoints: false
+      addWaypoints: true
     },
+    router: L.Routing.mapbox("pk.eyJ1IjoiYXJhdmluZG1hbm9qIiwiYSI6ImNtOGtrcHplcjB2cWEyaXNmcXk2azNoeTcifQ.oSKbvDJ5hvRJpNy0IHvYvQ", {
+      alternatives: false,
+      profile: `mapbox/${routeMode}`
+    }),
+    autoRoute: true,
     show: false,
     addWaypoints: true,
-    draggableWaypoints: false,
+    draggableWaypoints: true,
     routeWhileDragging: false,
-    showAlternatives: fast ? false : true,
+    showAlternatives: false,
+    // showAlternatives: fast ? false : true,
     fitSelectedRoutes: false,
     dragStyle: {
       opacity: 0.9,

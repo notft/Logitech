@@ -25,8 +25,8 @@ interface DriverProfile {
 }
 
 const DriverDashboard: React.FC = () => {
-  const MapDistance = useMemo(() => dynamic(
-    () => import('@/components/custom/MapDistance'),
+  const Map = useMemo(() => dynamic(
+    () => import('@/components/custom/Map'),
     { 
       loading: () => <p>A map is loading</p>,
       ssr: false
@@ -147,8 +147,8 @@ const userId =Cookies.get("ussrId")
               ) : (
                 <div className="w-full h-full bg-slate-800 flex items-center justify-center border-2 border-dashed border-gray-600">
                   {showMap && startLoc && endLoc ? (
-                    <MapDistance
-                      key={`${startLoc}-${endLoc}`} 
+                    <Map
+                      key={`${startLoc}-${endLoc}`} // Add key to force re-render when locations change
                       startLoc={startLoc}
                       endLoc={endLoc}
                       onDistanceCalculated={(distance) => {

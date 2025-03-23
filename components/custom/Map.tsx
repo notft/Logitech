@@ -26,7 +26,7 @@ interface Place {
   lon: string;
 }
 
-interface MapDistanceProps {
+interface Map {
   startLoc: string;
   endLoc: string;
   onDistanceCalculated: (distance: number) => void;
@@ -84,7 +84,7 @@ const MapInstructions: React.FC = () => (
   </div>
 );
 
-const MapDistance: React.FC<MapDistanceProps> = ({ startLoc, endLoc, onDistanceCalculated, onClose }) => {
+const Map: React.FC<Map> = ({ startLoc, endLoc, onDistanceCalculated, onClose }) => {
   const mapRef = useRef<L.Map | null>(null);
   const [startPoint, setStartPoint] = useState<[number, number] | null>(null);
   const [endPoint, setEndPoint] = useState<[number, number] | null>(null);
@@ -375,62 +375,57 @@ const MapDistance: React.FC<MapDistanceProps> = ({ startLoc, endLoc, onDistanceC
       </div>
     </div>
   );
+  const routeMode = ["driving", "driving-traffic", "cycling"];
 
   return (
-    <MapContainer
-      ref={mapRef}
-      center={[10.0159, 76.3419]}
-      zoom={12}
-      style={{ height: "100%", width: "100%" }}
-      maxBounds={KERALA_BOUNDS}
-      minZoom={7}
-      maxZoom={18}
-      boundsOptions={{ padding: [50, 50] }}
-      bounds={KERALA_BOUNDS}
-      attributionControl={false}
-      className="rounded-xl"
-    >
-      <AttributionControl position="bottomright" prefix={false} />
-      <MapEvents onMapClick={handleMapClick} />
-      {/* <MapInstructions /> */}
+    <>
+      {routeMode.map((mode, index) => (
+        <MapContainer
+          ref={mapRef}
+          center={index === 0 ? [9.615, 76.5715] : index === 1 ? [9.60245, 76.5867] : [10.0159, 76.3419]}
+          zoom={index === 0 ? 11 : index === 1 ? 11 : 12}
+          style={{ height: "100%", width: "100%" }}
+          maxBounds={KERALA_BOUNDS}
+          minZoom={7}
+          maxZoom={18}
+          boundsOptions={{ padding: [50, 50] }}
+          bounds={KERALA_BOUNDS}
+          attributionControl={false}
+          className="rounded-xl"
+        >
+          <AttributionControl position="bottomright" prefix={false} />
+          <MapEvents onMapClick={handleMapClick} />
+          {/* <MapInstructions /> */}
 
-      <TileLayer
-        // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://jawg.io">JawgIO</a>'
-        url={`https://tile.jawg.io/jawg-matrix/{z}/{x}/{y}.png?access-token=ElEpV0pssF7hprzkzXs3psMHA1UqpQQM1QZV1QATBiVo4d6LVJr3p2tyIsyJADRq`}
-      />
+          <TileLayer
+            // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://jawg.io">JawgIO</a>'
+            url={`https://tile.jawg.io/jawg-matrix/{z}/{x}/{y}.png?access-token=ElEpV0pssF7hprzkzXs3psMHA1UqpQQM1QZV1QATBiVo4d6LVJr3p2tyIsyJADRq`}
+          />
 
-      {districtData && <GeoJSON data={districtData} pathOptions={{
-        fillColor: 'transparent',
-        weight: 2,
-        opacity: 0.1,
-        color: 'white',
-        fillOpacity: 0.1
-      }} />}
+          {districtData && <GeoJSON data={districtData} pathOptions={{
+            fillColor: 'transparent',
+            weight: 2,
+            opacity: 0.1,
+            color: 'white',
+            fillOpacity: 0.1
+          }} />}
 
-      {startPoint && endPoint && (
-        <RoutingControl
-          fast={false}
-          key={routeKey}
-          position="topleft"
-          start={startPoint}
-          end={endPoint}
-          color="#ffffff"
-          onWaypointChange={handleWaypointChange}
-        />
-      )}
-      {startPoint && endPoint && (
-        <RoutingControl
-          fast={true}
-          key={routeKey + 1}
-          position="topleft"
-          start={startPoint}
-          end={endPoint}
-          color="#ffff00"
-          onWaypointChange={handleWaypointChange}
-        />
-      )}
-    </MapContainer>
-  );
+          {startPoint && endPoint && (
+            <RoutingControl
+              fast={false}
+              key={routeKey + routeMode.indexOf(mode)}
+              position="topleft"
+              start={startPoint}
+              end={endPoint}
+              color="#ffffff"
+              routeMode={mode}
+              onWaypointChange={handleWaypointChange}
+            />
+          )}
+        </MapContainer>
+      ))}
+    </>
+  )
 };
 
-export default React.memo(MapDistance);
+export default React.memo(Map);

@@ -22,6 +22,7 @@
     "cookies-next": "^5.1.0",
     "drizzle-kit": "^0.30.5",
     "drizzle-orm": "^0.41.0",
+    "html2canvas": "^1.4.1",
     "jose": "^6.0.10",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
