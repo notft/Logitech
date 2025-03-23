@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import {
   Menu,
   Grid3x3,
@@ -15,12 +15,18 @@ import {
   Maximize2,
   ChevronLeft,
   ChevronRight,
+  X,
+  Upload,
+  Loader2,
 } from "lucide-react"
 import Cookies from "js-cookie"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
+// import { Input } from "@/components/ui/input"
+// import { Label } from "@/components/ui/label"
+// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 const videoSources = [
   "https://www.shutterstock.com/shutterstock/videos/3748279689/preview/stock-footage-kochi-kerala-india-shot-of-a-narrow-street-bustling-with-parked-and-passing-tuk.webm",
@@ -46,7 +52,22 @@ export default function GovDash() {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
   const [visibleCameras, setVisibleCameras] = useState<number[]>([...Array(videoSources.length).keys()])
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
+  const [toggleUpload, setToggleUpload] = useState(false)
+  const [videoFile, setVideoFile] = useState<File | null>(null)
+  const [videoPreview, setVideoPreview] = useState<string>("")
+  const [isUploading, setIsUploading] = useState<boolean>(false)
+  const [error,setError]=useState("");
+  const [success,setSuccess]=useState("")
+  // ... other existing states
+  const [showDetectionResults, setShowDetectionResults] = useState<boolean>(false);
 
+  // Add new state for plates
+  const [detectedPlates, setDetectedPlates] = useState<Array<{
+    plate: string;
+    confidence: number;
+    timestamp: string;
+    frameNumber: string;
+  }>>([]);
   useEffect(() => {
     videoRefs.current = videoRefs.current.slice(0, videoSources.length)
   }, [videoSources.length])
@@ -90,11 +111,11 @@ export default function GovDash() {
       }
     })
   }
-const logOut = ()=> {
-  Cookies.remove("token");
-Cookies.remove("type");
-window.location.href = "/";
-}
+  const logOut = () => {
+    Cookies.remove("token")
+    Cookies.remove("type")
+    window.location.href = "/"
+  }
   const toggleFullscreen = (index: number) => {
     if (selectedCamera === index) {
       setSelectedCamera(null)
@@ -117,7 +138,7 @@ window.location.href = "/";
   const prevPage = () => {
     setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages)
   }
-// eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const start = currentPage * itemsPerPage
     const end = start + itemsPerPage
@@ -157,6 +178,95 @@ window.location.href = "/";
     animate: { scale: 1, opacity: 1, transition: { duration: 0.3 } },
     exit: { scale: 0.9, opacity: 0, transition: { duration: 0.2 } },
   }
+
+  const handleUploadVideo = async () => {
+    if (!videoFile) return;
+  
+    setIsUploading(true);
+  
+    try {
+      const formData = new FormData();
+      formData.append("file", videoFile); // Change "video" to "file" to match backend parameter name
+  
+      const response = await fetch("http://localhost:8000/plate", {
+        method: "POST",
+        body: formData,
+      });
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Server Error:", response.status, errorText);
+            throw new Error(`Server Error: ${response.status} ${response.statusText}`);
+          }
+          
+          const data = await response.json();
+          console.log("Upload Response:", data);
+          const plateData: Array<{
+            plate: string;
+            confidence: number;
+            timestamp: string;
+            frameNumber: string;
+          }> = [];
+      
+          if (data.results) {
+            Object.keys(data.results).forEach(frameKey => {
+              const frame = data.results[frameKey];
+              const timestamp = frame.timestamp;
+              
+              if (frame.plate_data && 
+                  frame.plate_data.results && 
+                  frame.plate_data.results.length > 0) {
+                frame.plate_data.results.forEach((result: { plate: string; score: number }) => {
+                  plateData.push({
+                    plate: result.plate,
+                    confidence: result.score,
+                    timestamp: timestamp,
+                    frameNumber: frameKey
+                  });
+                });
+              }
+            });
+          }
+          
+         
+          const plate = plateData[0].plate;
+          const timestamp = plateData[0].timestamp;
+          console.log(plate,timestamp);
+          const res = await fetch("/api/send-message",{
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({plate,timestamp})
+          })
+          if(!res.ok){
+            alert("Message not send")
+          }else{
+            alert("Message send");
+          }
+          setDetectedPlates(plateData);
+          
+          if (plateData.length > 0) {
+            setShowDetectionResults(true);
+          } else {
+            alert("No license plates detected in the video");
+          }
+          
+          setToggleUpload(false);
+        } catch (error) {
+          console.error("Error uploading video:", error);
+        } finally {
+          setIsUploading(false);
+        }
+      };
+      
+
+  useEffect(() => {
+    return () => {
+      if (videoPreview) {
+        URL.revokeObjectURL(videoPreview)
+      }
+    }
+  }, [videoPreview])
 
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-x-hidden">
@@ -211,7 +321,16 @@ window.location.href = "/";
           </motion.div>
         </div>
       </motion.header>
-
+      {/* {error && (
+                        <div className="bg-red-900 text-red-200 p-3 rounded-lg">
+                        {error}
+                      </div>
+                      )}
+                      {success && (
+                        <div className="bg-green-900 text-white-200 p-3 rounded-lg">
+                        {error}
+                      </div>
+                      )} */}
       <div className="container mx-auto p-4 md:p-6 lg:p-8">
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"
@@ -403,7 +522,14 @@ window.location.href = "/";
                 )}
               </Button>
             </motion.div>
-
+            <Button
+              variant={layout === "grid" ? "secondary" : "ghost"}
+              size="sm"
+              className="px-2"
+              onClick={() => setToggleUpload(true)}
+            >
+              Upload
+            </Button>
             <motion.div
               className="flex bg-gray-900/50 rounded-md p-1 border border-gray-800"
               whileHover={{ scale: 1.05 }}
@@ -417,6 +543,7 @@ window.location.href = "/";
               >
                 <Grid3x3 className="h-4 w-4" />
               </Button>
+
               <Button
                 variant={layout === "compact" ? "secondary" : "ghost"}
                 size="sm"
@@ -428,7 +555,107 @@ window.location.href = "/";
             </motion.div>
           </div>
         </motion.div>
+        {toggleUpload && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bg-gray-900 border border-gray-800 rounded-lg p-6 w-full max-w-md"
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              transition={{ type: "spring", damping: 15 }}
+            >
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold">Upload Video</h3>
+                <Button variant="ghost" size="sm" className="hover:bg-gray-800" onClick={() => setToggleUpload(false)}>
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
 
+              <div className="space-y-4">
+                <div
+                  className="border-2 border-dashed border-gray-700 rounded-lg p-8 text-center hover:border-gray-500 transition-colors cursor-pointer"
+                  onClick={() => {
+                    const uploadInput = document.getElementById("video-upload");
+                    if (uploadInput) {
+                      uploadInput.click();
+                    }
+                  }}
+                >
+                  <input
+                    type="file"
+                    id="video-upload"
+                    className="hidden"
+                    accept="video/mp4,video/webm,video/mov"
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files[0]) {
+                        setVideoFile(e.target.files[0])
+                        setVideoPreview(URL.createObjectURL(e.target.files[0]))
+                      }
+                    }}
+                  />
+
+                  {!videoPreview ? (
+                    <div className="space-y-2">
+                     
+                      <Upload className="h-10 w-10 mx-auto text-gray-400" />
+                      <p className="text-gray-400">Drag and drop a video file or click to browse</p>
+                      <p className="text-xs text-gray-500">Supports MP4, WebM, MOV (max 100MB)</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <video src={videoPreview} className="max-h-40 mx-auto rounded" controls />
+                      <p className="text-sm text-gray-400 truncate">{videoFile?.name}</p>
+                    </div>
+                  )}
+                </div>
+{/* 
+                <div className="space-y-2">
+                  <Label htmlFor="camera-name">Camera Name</Label>
+                  <Input
+                    id="camera-name"
+                    placeholder="Enter camera name or location"
+                    className="bg-gray-800 border-gray-700"
+                    value={cameraName}
+                    onChange={(e) => setCameraName(e.target.value)}
+                  />
+                </div> */}
+
+
+                <div className="pt-4 flex gap-3">
+                  <Button
+                    variant="outline"
+                    className="flex-1 bg-gray-800 hover:bg-gray-700 border-gray-700"
+                    onClick={() => {
+                      setVideoFile(null)
+                      setVideoPreview("")
+                      setToggleUpload(false)
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+                    disabled={!videoFile}
+                    onClick={handleUploadVideo}
+                  >
+                    {isUploading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Uploading...
+                      </>
+                    ) : (
+                      "Upload Video"
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
         <AnimatePresence mode="wait">
           {isFullscreen && selectedCamera !== null ? (
             <motion.div
@@ -492,7 +719,7 @@ window.location.href = "/";
           animate="visible"
         >
           {videoSources.map((src, index) => {
-             const isMobile = typeof window !== "undefined" && window.innerWidth < 640
+            const isMobile = typeof window !== "undefined" && window.innerWidth < 640
             const shouldShow = isMobile ? visibleCameras.includes(index) : true
 
             if (!shouldShow) return null

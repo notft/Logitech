@@ -8,8 +8,22 @@ import time
 import tempfile
 import cv2
 from typing import List, Dict
+from fastapi.middleware.cors import CORSMiddleware
+import time
+import tempfile
+import cv2
+from typing import List, Dict
 
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, replace with specific origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 load_dotenv()
 API_KEY = os.getenv('API_KEY_PLATE')
 
