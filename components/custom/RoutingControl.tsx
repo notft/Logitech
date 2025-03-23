@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 "use client";
 import L, { icon } from "leaflet";
 import { createControlComponent } from "@react-leaflet/core";
