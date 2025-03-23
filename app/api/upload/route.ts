@@ -12,19 +12,35 @@ export async function POST(req: Request) {
     const formData = await req.formData();
     const file = formData.get('file');
 
-    if (!file || !(file instanceof Blob)) {
+    if (!file) {
       return NextResponse.json(
-        { error: 'No valid file provided' },
+        { error: 'No file provided' },
         { status: 400 }
       );
     }
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const base64File = buffer.toString('base64');
+
+    let dataUrl: string;
+    
+    // Handle both cases: when the file is a string (data URL) or a Blob
+    if (typeof file === 'string') {
+      // Already a data URL from canvas.toDataURL()
+      dataUrl = file;
+    } else if (file instanceof Blob) {
+      // Convert Blob to data URL
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      dataUrl = `data:${file.type};base64,${buffer.toString('base64')}`;
+    } else {
+      return NextResponse.json(
+        { error: 'Invalid file format' },
+        { status: 400 }
+      );
+    }
 
     const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET;
 
-    const result = await cloudinary.uploader.upload(`data:${file.type};base64,${base64File}`, {
+    // For data URLs, we can just pass them directly to Cloudinary
+    const result = await cloudinary.uploader.upload(dataUrl, {
       upload_preset: uploadPreset,
       folder: 'map-screenshots',
     });
