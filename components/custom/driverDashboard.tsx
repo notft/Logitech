@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { Button } from "@/components/ui/button"
 import Cookies from "js-cookie";
 import html2canvas from 'html2canvas-pro';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 import { CoreMessage, generateText } from 'ai';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 
@@ -124,16 +124,25 @@ const DriverDashboard: React.FC = () => {
   
       const canvas = await html2canvas(mapContainer, { useCORS: true });
       const dataUrl = canvas.toDataURL('image/png');
-  
+      
+      const blob = await (async () => {
+        const res = await fetch(dataUrl);
+        return res.blob();
+      })();
+      
       const formData = new FormData();
-      formData.append('file', dataUrl);
+      formData.append('file', blob, 'screenshot.png');
   
       const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
       });
   
-      if (!response.ok) throw new Error('Failed to upload map screenshot');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Upload failed: ${errorData.error || 'Unknown error'}`);
+      }
+      
       const result = await response.json();
       console.log('Upload result:', result);
   
