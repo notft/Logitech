@@ -35,7 +35,9 @@ export default function LoginPage() {
       const data = await res.json()
       Cookies.set("token", data.token);
       Cookies.set("type", data.type);
+      Cookies.set("ussrId",data.userId)
       if(data.type == "admin"){
+        
         router.push("/government/dashboard");
       }else if(data.type == "driver"){
         router.push("/driver");

@@ -13,7 +13,7 @@ import 'leaflet/dist/leaflet.css';
 import RoutingControl from './RoutingControl';
 import { startIcon, endIcon, cameraIcon } from './MarkerIcons';
 import { MapPin, Target, Ruler, X } from 'lucide-react';
-import "leaflet.heat";
+
 
 const KERALA_BOUNDS: L.LatLngBoundsExpression = [
   [8.2, 74.8],

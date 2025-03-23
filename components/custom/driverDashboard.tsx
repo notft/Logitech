@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 // import MapDistance from '@/components/custom/MapDistance';
 import dynamic from 'next/dynamic';
-
+import {Button} from "@/components/ui/button"
+import Cookies from "js-cookie";
 interface Package {
   id: string;
   destination: string;
@@ -41,13 +42,13 @@ const DriverDashboard: React.FC = () => {
   const [endLoc, setEndLoc] = useState<string | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
 
-  const driverProfile: DriverProfile = {
-    name: "John Doe",
-    id: "DR-12345",
-    rating: 4.8,
-    completedDeliveries: 342,
-    vehicleInfo: "Toyota Corolla (2020) - ABC1234"
+  const [drivername, setDriverName] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const driverProfile = {
+    name: drivername,
   };
+
 
   const fetchPackage = async () => {
     try {
@@ -61,9 +62,25 @@ const DriverDashboard: React.FC = () => {
       setError("No orders found");
     }
   };
+const userId =Cookies.get("ussrId")
+  const fetchDriver = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(`/api/user?ussrID=${userId}`);
+      if (!res.ok) throw new Error("Driver not found");
+      const data = await res.json();
+      setDriverName(data.username || "Unknown Driver");
+      setError(null);
+    } catch (err) {
+      setError("Driver not found");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchPackage();
+    fetchDriver();
   }, []);
 
   useEffect(() => {
@@ -72,26 +89,18 @@ const DriverDashboard: React.FC = () => {
     }, 2000);
     return () => clearTimeout(timeout);
   }, []);
-
-  // Added debugging to track state changes
   useEffect(() => {
     if (startLoc && endLoc) {
       console.log("Navigation points set:", { startLoc, endLoc });
-      // Force showMap to true whenever navigation points are set
       setShowMap(true);
     }
   }, [startLoc, endLoc]);
 
   const handleNavigate = (pkg: Package) => {
     console.log("Navigate clicked for package:", pkg.id);
-    // Set the selected package
     setSelectedPackage(pkg);
-    
-    // Force reset locations first to trigger a re-render if same package is selected twice
     setStartLoc(null);
     setEndLoc(null);
-    
-    // Use setTimeout to ensure the reset happens before setting new values
     setTimeout(() => {
       if (pkg.start_location && pkg.destination) {
         setStartLoc(pkg.start_location);
@@ -119,10 +128,7 @@ const DriverDashboard: React.FC = () => {
           </button>
         </div>
       </header>
-
-      {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Left Panel - Map Area */}
         <div className="flex-grow p-4">
           <div className="bg-slate-900 rounded-lg shadow-md h-full flex flex-col border border-gray-700">
             <div className="p-4 border-b border-gray-700 flex justify-between items-center">
@@ -142,7 +148,7 @@ const DriverDashboard: React.FC = () => {
                 <div className="w-full h-full bg-slate-800 flex items-center justify-center border-2 border-dashed border-gray-600">
                   {showMap && startLoc && endLoc ? (
                     <MapDistance
-                      key={`${startLoc}-${endLoc}`} // Add key to force re-render when locations change
+                      key={`${startLoc}-${endLoc}`} 
                       startLoc={startLoc}
                       endLoc={endLoc}
                       onDistanceCalculated={(distance) => {
@@ -172,8 +178,6 @@ const DriverDashboard: React.FC = () => {
             </div>
           </div>
         </div>
-
-        {/* Right Panel - Package Details & Settings */}
         <div className="w-80 bg-slate-900 border-l border-gray-700 overflow-y-auto">
           {showSettings ? (
             <div className="p-4">
@@ -192,22 +196,21 @@ const DriverDashboard: React.FC = () => {
                   <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center text-white text-3xl mb-2">
                     {driverProfile.name.charAt(0)}
                   </div>
-                  <h3 className="font-semibold text-xl">{driverProfile.name}</h3>
-                  <p className="text-gray-400">ID: {driverProfile.id}</p>
+                  <h3 className="font-semibold text-xl">{drivername}</h3>
+                  <p className="text-gray-400">ID: DVRID-827</p>
                 </div>
 
                 <div className="bg-slate-800 p-4 rounded-lg border border-gray-700">
                   <div className="flex justify-between mb-2">
                     <span>Rating:</span>
-                    <span className="font-semibold">{driverProfile.rating} ⭐</span>
+                    <span className="font-semibold">4 ⭐</span>
                   </div>
                   <div className="flex justify-between mb-2">
                     <span>Completed:</span>
-                    <span className="font-semibold">{driverProfile.completedDeliveries} deliveries</span>
+                    <span className="font-semibold">87 deliveries</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Vehicle:</span>
-                    <span className="font-semibold">{driverProfile.vehicleInfo}</span>
+                  <div className="flex justify-between mb-2">
+                    <Button onClick={()=>{Cookies.remove("token");Cookies.remove("ussrId");window.location.href = "/auth/login"}}>Logout</Button>
                   </div>
                 </div>
               </div>
@@ -264,10 +267,6 @@ const DriverDashboard: React.FC = () => {
                       </div>
                     </div>
                   ))}
-
-                  <button className="w-full py-3 bg-gray-700 text-gray-300 rounded hover:bg-gray-600 flex items-center justify-center">
-                    Load More Packages
-                  </button>
                 </div>
               )}
             </div>
