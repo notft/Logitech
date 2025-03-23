@@ -1,6 +1,6 @@
 import twilio from "twilio";
+import {db} from "@/lib/db"
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
 import data from "@/public/details.json";
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;   
@@ -25,8 +25,9 @@ async function sendSMS(to: string, message: string) {
 export async function POST(req: Request) {
     try{
     const body = await req.json();
-    const { vehiclenumber } = body;
-    const datas  = data.find(details => vehiclenumber == details.vehicleNumber);
+    const { plate,timestamp } = body;
+    const datas  = data.find(details => plate.toUpperCase() == details.vehicleNumber.toUpperCase());
+    await db(`INSERT INTO car_details (serial_number,plate_number,passing_time) values(000,$1,$2)`, [plate, timestamp])
     if (!datas) {
         return NextResponse.json({ error: "Vehicle number not found" }, { status: 404 });
     }
@@ -36,7 +37,7 @@ export async function POST(req: Request) {
 Drive safe,  
 MVD`;
 
-    sendSMS(phonenumber,message);
+    await sendSMS(phonenumber,message);
     return NextResponse.json({ message: "Message sent successfully" }, { status: 200 });
     }catch(error){
         console.log(error);
