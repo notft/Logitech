@@ -57,7 +57,6 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/",
     "/auth/login",
     "/auth/register",
     "/government",

@@ -118,25 +118,32 @@ const DriverDashboard: React.FC = () => {
   };
 
   const calculateRoute = async () => {
-    const llm = new Promise(async (resolve, reject) => {
-      await html2canvas(document.getElementById("map-container")!, { useCORS: true, allowTaint: true }).then(async (canvas) => {
-        const imgBase64 = canvas.toDataURL("image/png").split(",")[1];
-        const file = new File([imgBase64], "screenshot.png", { type: "image/png" });
-        const formData = new FormData();
-        formData.append("file", file);
-        try {
-          const response = await fetch("/api/upload", {
-            method: "POST",
-            body: formData,
-          });
-          const result = await response.json();
-          console.log(result);
-          resolve(result);
-        } catch (error) {
-          reject(error);
-        }
+    try {
+      const mapContainer = document.getElementById('map-container');
+      if (!mapContainer) throw new Error('Map container element not found');
+  
+      const canvas = await html2canvas(mapContainer, { useCORS: true });
+      const dataUrl = canvas.toDataURL('image/png');
+  
+      const formData = new FormData();
+      formData.append('file', dataUrl);
+  
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
       });
-    });
+  
+      if (!response.ok) throw new Error('Failed to upload map screenshot');
+      const result = await response.json();
+      console.log('Upload result:', result);
+  
+      return result.url;
+    } catch (error) {
+      console.error('Error uploading map screenshot:', error);
+      throw error;
+    }
+  };
+  
     const llmFunc = async (imageUrl: string) => {
       const system_prompt = `<system>You are a route analysis model which will be presented with an image url which 
 is divided into 3 equal sections. Each section shows a different route to the same 
@@ -156,18 +163,17 @@ just one number answer. Will be 1, 2 or 3. You shall not send another response b
       });
       return text;
     }
-    toast.promise(
-      llm,
-      {
-        loading: "Fetching the best navigation route...",
-        success: (data: any) => {
-          console.log(llmFunc(data.imageUrl));
-          return "Navigation Route Generated!";
-        },
-        error: (err) => "Error Occurred!",
-      },
-    );
-  };
+    // toast.promise(
+    //   llm,
+    //   {
+    //     loading: "Fetching the best navigation route...",
+    //     success: (data: any) => {
+    //       console.log(llmFunc(data.imageUrl));
+    //       return "Navigation Route Generated!";
+    //     },
+    //     error: (err) => "Error Occurred!",
+    //   },
+    // );
 
 
   return (
@@ -335,6 +341,6 @@ just one number answer. Will be 1, 2 or 3. You shall not send another response b
       </div>
     </div>
   );
-};
+}
 
 export default DriverDashboard;
