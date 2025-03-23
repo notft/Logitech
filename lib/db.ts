@@ -16,7 +16,7 @@ const schema = async () => {
         password TEXT NOT NULL
       );
     `;
-
+    
     await db`
       CREATE TABLE IF NOT EXISTS orders (
         id SERIAL PRIMARY KEY,
@@ -27,7 +27,17 @@ const schema = async () => {
         created_at TIMESTAMP DEFAULT NOW()
       );
     `;
-
+    
+    await db`
+      CREATE TABLE IF NOT EXISTS car_plates (
+        id SERIAL PRIMARY KEY,
+        serial_number TEXT NOT NULL,
+        plate_number TEXT NOT NULL,
+        passing_time TIMESTAMP DEFAULT NOW(),
+        created_at TIMESTAMP DEFAULT NOW()
+      );
+    `;
+    
     console.log("✅ Tables created successfully.");
   } catch (error) {
     console.error("❌ Error creating table:", error);
