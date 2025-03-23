@@ -228,7 +228,7 @@ const CompanyDashboard: React.FC = () => {
                         <td className="py-3 px-4 font-medium">{order.id}</td>
                         <td className="py-3 px-4">{order.destination}</td>
                         <td className="py-3 px-4">{order.type}</td>
-                        <td className="py-3 px-4">{formatDate(order.createdAt)}</td>    
+                        <td className="py-3 px-4">{formatDate(order. created_at)}</td>    
                         <td className="py-3 px-4">
                           
                         </td>
