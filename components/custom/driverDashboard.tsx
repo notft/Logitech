@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { Button } from "@/components/ui/button"
 import Cookies from "js-cookie";
 import html2canvas from 'html2canvas-pro';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 import { CoreMessage, generateText } from 'ai';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 
@@ -125,7 +125,6 @@ const DriverDashboard: React.FC = () => {
       const canvas = await html2canvas(mapContainer, { useCORS: true });
       const dataUrl = canvas.toDataURL('image/png');
       
-      // Convert dataUrl to Blob
       const blob = await (async () => {
         const res = await fetch(dataUrl);
         return res.blob();
