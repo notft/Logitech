@@ -2,9 +2,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 // import MapDistance from '@/components/custom/MapDistance';
 import dynamic from 'next/dynamic';
-import {Button} from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import Cookies from "js-cookie";
 import html2canvas from 'html2canvas-pro';
+import toast from 'react-hot-toast';
+import { CoreMessage, generateText } from 'ai';
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
+
 interface Package {
   id: string;
   destination: string;
@@ -28,7 +32,7 @@ interface DriverProfile {
 const DriverDashboard: React.FC = () => {
   const Map = useMemo(() => dynamic(
     () => import('@/components/custom/Map'),
-    { 
+    {
       loading: () => <p>A map is loading</p>,
       ssr: false
     }
@@ -63,7 +67,7 @@ const DriverDashboard: React.FC = () => {
       setError("No orders found");
     }
   };
-const userId =Cookies.get("ussrId")
+  const userId = Cookies.get("ussrId")
   const fetchDriver = async () => {
     try {
       setLoading(true);
@@ -113,37 +117,58 @@ const userId =Cookies.get("ussrId")
     }, 50);
   };
 
-  function base64ToBlob(base64: string, mimeType: string): Blob {
-    const byteCharacters = atob(base64);
-    const byteNumbers: number[] = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    return new Blob([byteArray], { type: mimeType });
-  }
-
   const calculateRoute = async () => {
-    html2canvas(document.getElementById("map-container")!, { useCORS: true, allowTaint: true }).then(async (canvas) => {
-      const imgBase64 = canvas.toDataURL("image/png").split(",")[1];
-      const blob = base64ToBlob(imgBase64, "image/png");
-    
-      const formData = new FormData();
-      formData.append("file", blob, "screenshot.png"); 
-    
-      try {
-        const response = await fetch("/api/upload", {
-          method: "POST",
-          body: formData,
-        });
-        const result = await response.json();
-        alert("Image uploaded to Cloudinary: " + result.imgUrl);
-      } catch (error) {
-        console.error("Upload failed:", error);
-      }
+    const llm = new Promise(async (resolve, reject) => {
+      await html2canvas(document.getElementById("map-container")!, { useCORS: true, allowTaint: true }).then(async (canvas) => {
+        const imgBase64 = canvas.toDataURL("image/png").split(",")[1];
+        const file = new File([imgBase64], "screenshot.png", { type: "image/png" });
+        const formData = new FormData();
+        formData.append("file", file);
+        try {
+          const response = await fetch("/api/upload", {
+            method: "POST",
+            body: formData,
+          });
+          const result = await response.json();
+          console.log(result);
+          resolve(result);
+        } catch (error) {
+          reject(error);
+        }
+      });
     });
+    const llmFunc = async (imageUrl: string) => {
+      const system_prompt = `<system>You are a route analysis model which will be presented with an image url which 
+is divided into 3 equal sections. Each section shows a different route to the same 
+destination. You must use your vision and select the most efficient route. The left 
+most box will be 1, the middle box will be 2 and the right most will be 3, Reply with 
+just one number answer. Will be 1, 2 or 3. You shall not send another response besides these 
+3 numbers.</system>`;
+      const prompt = [];
+      prompt.push({ role: 'user', content: [{ type: "text", text: "This is the image" }] } as CoreMessage);
+      const google = createGoogleGenerativeAI({
+        apiKey: process.env.GOOGLE_API_KEY,
+      });
+      const text = await generateText({
+        model: google("gemini-2.0-flash-001"),
+        system: system_prompt,
+        messages: prompt,
+      });
+      return text;
+    }
+    toast.promise(
+      llm,
+      {
+        loading: "Fetching the best navigation route...",
+        success: (data: any) => {
+          console.log(llmFunc(data.imageUrl));
+          return "Navigation Route Generated!";
+        },
+        error: (err) => "Error Occurred!",
+      },
+    );
   };
-  
+
 
   return (
     <div className="flex flex-col h-screen bg-slate-950 text-gray-200">
@@ -179,7 +204,7 @@ const userId =Cookies.get("ussrId")
                 </div>
               ) : (
                 <div className="w-full h-full bg-slate-800 flex items-center justify-center border-2 border-dashed border-gray-600"
-                id="map-container"
+                  id="map-container"
                 >
                   {showMap && startLoc && endLoc ? (
                     <Map
@@ -245,7 +270,7 @@ const userId =Cookies.get("ussrId")
                     <span className="font-semibold">87 deliveries</span>
                   </div>
                   <div className="flex justify-between mb-2">
-                    <Button onClick={()=>{Cookies.remove("token");Cookies.remove("ussrId");window.location.href = "/auth/login"}}>Logout</Button>
+                    <Button onClick={() => { Cookies.remove("token"); Cookies.remove("ussrId"); window.location.href = "/auth/login" }}>Logout</Button>
                   </div>
                 </div>
               </div>
@@ -267,9 +292,8 @@ const userId =Cookies.get("ussrId")
               ) : (
                 <div className="space-y-4">
                   {packageList.map(pkg => (
-                    <div key={pkg.id} className={`border rounded-lg p-3 hover:shadow-md bg-slate-800 ${
-                      selectedPackage?.id === pkg.id ? 'border-blue-500' : 'border-gray-700'
-                    }`}>
+                    <div key={pkg.id} className={`border rounded-lg p-3 hover:shadow-md bg-slate-800 ${selectedPackage?.id === pkg.id ? 'border-blue-500' : 'border-gray-700'
+                      }`}>
                       <div className="flex justify-between items-start mb-2">
                         <span className="font-semibold">Package {pkg.id}</span>
                         <span className={`text-xs px-2 py-1 rounded-full ${pkg.status === 'delivered' ? 'bg-green-800 text-green-300' :
@@ -286,18 +310,17 @@ const userId =Cookies.get("ussrId")
                         <p><span className="text-gray-400">Address:</span> {pkg.destination}</p>
                       </div>
                       <div className="mt-3 flex space-x-2">
-                        <button 
-                          className={`flex-1 text-white text-sm py-1 px-2 rounded ${
-                            selectedPackage?.id === pkg.id 
-                              ? 'bg-green-600 hover:bg-green-700' 
+                        <button
+                          className={`flex-1 text-white text-sm py-1 px-2 rounded ${selectedPackage?.id === pkg.id
+                              ? 'bg-green-600 hover:bg-green-700'
                               : 'bg-blue-600 hover:bg-blue-700'
-                          }`}
+                            }`}
                           onClick={() => handleNavigate(pkg)}
                         >
                           {selectedPackage?.id === pkg.id ? 'Navigated' : 'Navigate'}
                         </button>
                         <button className="flex-1 bg-gray-700 text-gray-300 text-sm py-1 px-2 rounded hover:bg-gray-600"
-                        onClick={calculateRoute}
+                          onClick={calculateRoute}
                         >
                           Calculate Route
                         </button>
